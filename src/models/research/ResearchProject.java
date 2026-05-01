@@ -1,5 +1,6 @@
 package models.research;
 
+import exceptions.NotResearcherException;
 import interfaces.Researchable;
 
 import java.util.ArrayList;
@@ -18,6 +19,9 @@ public class ResearchProject {
     }
 
     public void addParticipant(Researchable researcher) {
+        if (researcher == null) {
+            throw new NotResearcherException("Only researchers can join research projects");
+        }
         participants.add(researcher);
     }
 
