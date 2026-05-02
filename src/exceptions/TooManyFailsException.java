@@ -1,5 +1,7 @@
 package exceptions;
 
-public class TooManyFailsException {
-
+public class TooManyFailsException extends RuntimeException {
+    public TooManyFailsException(String message) {
+        super(message);
+    }
 }
