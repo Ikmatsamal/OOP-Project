@@ -24,6 +24,19 @@ public class Transcript {
     public List<Mark> getMarks() {
         return marks;
     }
+    
+    public List<Mark> getMarks(Course course) {
+        List<Mark> result = new ArrayList<>();
+
+        for (Mark mark : marks) {
+            if (mark.getCourse().equals(course)) {
+                result.add(mark);
+            }
+        }
+
+        return result;
+    }
+    
 
     public double calculateGPA() {
         if (marks.isEmpty()) return 0.0;

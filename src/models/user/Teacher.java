@@ -5,6 +5,7 @@ public class Teacher extends User {
     private String department;
     private String qualification;
     private String[] teachingSubjects;
+    private int rating;
 
     public Teacher(int id, String name, String email, String phoneNumber, 
                    String password, String employeeId, String department, String qualification) {
@@ -15,6 +16,15 @@ public class Teacher extends User {
         this.teachingSubjects = new String[10];
     }
 
+    public void setRating(int rating) {
+        this.rating = rating;
+        this.updatedAt = System.currentTimeMillis();
+    }
+
+    public int getRating() {
+        return rating;
+    }
+    
     
     public String getEmployeeId() {
         return employeeId;
