@@ -5,11 +5,16 @@ import models.academic.Mark;
 import models.academic.Transcript;
 import models.research.ResearcherDecorator;
 
+import exceptions.CreditLimitExceededException;
+import exceptions.TooManyFailsException;
+import exceptions.InvalidSupervisorException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Student extends User {
+
     private int studentId;
     private String major;
     private int year;
@@ -23,6 +28,7 @@ public class Student extends User {
     public Student(int id, String name, String email, String phoneNumber,
                    String password, int studentId, String major, int year) {
         super(id, name, email, phoneNumber, password, "STUDENT");
+
         this.studentId = studentId;
         this.major = major;
         this.year = year;
@@ -33,8 +39,14 @@ public class Student extends User {
         this.transcript = new Transcript(this);
     }
 
+    
     public void registerCourse(Course course) {
+        if (credits + course.getCredits() > 21) {
+            throw new CreditLimitExceededException("Credit limit exceeded (max 21)");
+        }
+
         enrolledCourses.add(course);
+        credits += course.getCredits();
     }
 
     public List<Mark> viewMarks(Course course) {
@@ -53,8 +65,21 @@ public class Student extends User {
         return gpa;
     }
 
+    
     public void incrementFailCount() {
         failCount++;
+
+        if (failCount > 3) {
+            throw new TooManyFailsException("Too many failed courses");
+        }
+    }
+
+   
+    public void setSupervisor(ResearcherDecorator supervisor) {
+        if (supervisor.getHIndex() < 3) {
+            throw new InvalidSupervisorException("Supervisor must have h-index >= 3");
+        }
+        this.supervisor = supervisor;
     }
 
     @Override

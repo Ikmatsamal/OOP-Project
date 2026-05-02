@@ -15,9 +15,9 @@ public class Main {
         // create user
     	User user = new Student(
     	        1,
-    	        "Aruzhan",
-    	        "aruzhan@example.com",
-    	        "+77000000000",
+    	        "Aidana",
+    	        "aidana@example.com",
+    	        "+77475662156",
     	        "1234",
     	        1001,
     	        "Computer Science",
@@ -69,6 +69,19 @@ public class Main {
         try {
             project.addParticipant(null);
         } catch (NotResearcherException e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+        
+     // test fail count exception
+        try {
+            Student student = (Student) user;
+
+            student.incrementFailCount();
+            student.incrementFailCount();
+            student.incrementFailCount();
+            student.incrementFailCount();
+
+        } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
         }
 
