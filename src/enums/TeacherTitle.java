@@ -1,5 +1,8 @@
 package enums;
 
-public class TeacherTitle {
-
+public enum TeacherTitle {
+    TUTOR,
+    LECTURER,
+    SENIOR_LECTURER,
+    PROFESSOR
 }
