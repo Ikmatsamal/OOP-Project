@@ -9,13 +9,13 @@ public class SystemMain {
 
         DatabaseSingleton db = DatabaseSingleton.getInstance();
 
-        // тестовый пользователь
         Admin admin = new Admin(
-                "1",
-                "Admin",
+                1,
                 "Admin",
                 "admin@gmail.com",
-                "123"
+                "+77000000000",
+                "123",
+                "ADMIN"
         );
 
         db.addUser(admin);
