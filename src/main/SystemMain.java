@@ -1,4 +1,5 @@
 package main;
+import models.system.UniversitySystem;
 
 import models.user.Admin;
 import patterns.singleton.DatabaseSingleton;
