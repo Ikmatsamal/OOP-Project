@@ -3,7 +3,7 @@ import models.system.UniversitySystem;
 
 import models.user.Admin;
 import patterns.singleton.DatabaseSingleton;
-import system.UniversitySystem;
+import models.system.UniversitySystem;
 
 public class SystemMain {
     public static void main(String[] args) {
