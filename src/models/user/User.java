@@ -58,6 +58,10 @@ public class User {
         return updatedAt;
     }
 
+    public String getPassword() {
+        return password;
+}
+
     
     public void setName(String name) {
         this.name = name;
