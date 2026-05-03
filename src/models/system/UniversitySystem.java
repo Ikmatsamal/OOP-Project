@@ -1,5 +1,4 @@
 package system;
-
 import models.user.User;
 import patterns.singleton.DatabaseSingleton;
 import services.AuthService;
