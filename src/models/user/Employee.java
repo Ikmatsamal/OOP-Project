@@ -52,6 +52,14 @@ public class Employee extends User {
     public void submitLeaveRequest(String reason, String startDate, String endDate) {
         System.out.println(name + " submitted leave request from " + startDate + " to " + endDate);
     }
+    
+    public void sendMessage(String message) {
+        System.out.println(name + " sent message: " + message);
+    }
+
+    public void sendComplaint(String complaint) {
+        System.out.println(name + " submitted complaint: " + complaint);
+    }
 
     @Override
     public void displayInfo() {
