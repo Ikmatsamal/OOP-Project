@@ -1,54 +1,57 @@
 package models.user;
 
-public class Manager extends Employee {
-    private String managerId;
-    private int supervisedEmployeeCount;
-    private String[] subordinates;
+import models.academic.Course;
+import models.user.Student;
+import models.user.Teacher;
+import models.research.ResearcherDecorator;
+import enums.ManagerType;
 
-    public Manager(int id, String name, String email, String phoneNumber, 
-                   String password, String employeeId, String department, 
-                   String jobTitle, String managerId) {
+public class Manager extends Employee {
+
+    private ManagerType type;
+
+    public Manager(int id, String name, String email, String phoneNumber,
+                   String password, String employeeId, String department,
+                   String jobTitle, ManagerType type) {
         super(id, name, email, phoneNumber, password, employeeId, department, jobTitle);
         this.role = "MANAGER";
-        this.managerId = managerId;
-        this.supervisedEmployeeCount = 0;
-        this.subordinates = new String[50];
+        this.type = type;
     }
 
-    
-    public String getManagerId() {
-        return managerId;
+    public ManagerType getType() {
+        return type;
     }
 
-    public int getSupervisedEmployeeCount() {
-        return supervisedEmployeeCount;
+    public void approveRegistration(Student s, Course c) {
+        System.out.println(name + " approved registration of " + s.getName() + " to " + c.getName());
     }
 
-    public String[] getSubordinates() {
-        return subordinates;
+    public void assignCourse(Course c, Teacher t) {
+        t.manageCourse(c);
+        System.out.println(name + " assigned course " + c.getName() + " to " + t.getName());
     }
 
-    
-    public void addSubordinate(String employeeId) {
-        if (supervisedEmployeeCount < subordinates.length) {
-            subordinates[supervisedEmployeeCount] = employeeId;
-            supervisedEmployeeCount++;
-            System.out.println(name + " added subordinate: " + employeeId);
-        }
+    public void assignSupervisor(Student s, ResearcherDecorator r) {
+        System.out.println(name + " assigned supervisor to " + s.getName());
     }
 
-    public void approveLeavRequest(String employeeId) {
-        System.out.println(name + " (Manager) approved leave request for: " + employeeId);
+    public void manageNews() {
+        System.out.println(name + " is managing news");
     }
 
-    public void evaluateEmployee(String employeeId, String evaluation) {
-        System.out.println(name + " evaluated " + employeeId + ": " + evaluation);
+    public void viewRequests() {
+        System.out.println(name + " is viewing requests");
+    }
+
+    public void createReport() {
+        System.out.println(name + " is creating report");
     }
 
     @Override
-    public void displayInfo() {
-        super.displayInfo();
-        System.out.println("Manager ID: " + managerId);
-        System.out.println("Supervised Employees: " + supervisedEmployeeCount);
+    public String toString() {
+        return "Manager{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                '}';
     }
 }
