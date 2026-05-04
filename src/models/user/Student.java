@@ -54,7 +54,7 @@ public class Student extends User {
     }
 
     public void rateTeacher(Teacher teacher, int rating) {
-        teacher.setRating(rating);
+        teacher.addRating(rating);
     }
 
     public Transcript getTranscript() {
