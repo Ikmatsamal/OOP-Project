@@ -6,8 +6,9 @@ import models.user.User;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.io.Serializable;
 
-public class ResearcherDecorator implements Researchable {
+public class ResearcherDecorator implements Researchable, Serializable {
 
     private User user;
     private int hIndex;
@@ -28,9 +29,10 @@ public class ResearcherDecorator implements Researchable {
 
     @Override
     public void addProject(ResearchProject project) {
-        projects.add(project);
+        if (project != null) {
+            projects.add(project);
+        }
     }
-
     @Override
     public void printPapers(Comparator<ResearchPaper> comparator) {
         papers.stream()
@@ -46,6 +48,10 @@ public class ResearcherDecorator implements Researchable {
     @Override
     public List<ResearchPaper> getPapers() {
         return papers;
+    }
+    
+    public List<ResearchProject> getProjects() {
+        return projects;
     }
 
     public User getUser() {

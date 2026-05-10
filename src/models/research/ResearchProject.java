@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.io.Serializable;
 
 public class ResearchProject implements Serializable{
 
@@ -31,10 +30,14 @@ public class ResearchProject implements Serializable{
     public void removeParticipant(Researchable researcher) {
         participants.remove(researcher);
     }
-
     public void addPublishedPaper(ResearchPaper paper) {
+        if (paper == null) {
+            throw new IllegalArgumentException("Paper cannot be null");
+        }
         publishedPapers.add(paper);
     }
+    
+    
 
     public List<Researchable> getParticipants() {
         return participants;
