@@ -1,8 +1,10 @@
 package models.user;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import models.academic.Course;
 import models.academic.Mark;
@@ -15,7 +17,7 @@ public class Teacher extends User {
 
     private List<Course> courses;
     private double rating;
-    private List<String> teachingSubjects;
+    private Set<String> teachingSubjects;
 
     public Teacher(int id, String name, String email, String phoneNumber,
                    String password, String employeeId, String department, String qualification) {
@@ -26,12 +28,17 @@ public class Teacher extends User {
         this.qualification = qualification;
 
         this.courses = new ArrayList<>();
-        this.teachingSubjects = new ArrayList<>();
+        this.teachingSubjects = new HashSet<>();
         this.rating = 0.0;
     }
 
-    public void putMarks(Student s, Mark m) {
-        System.out.println(name + " put marks for " + s.getName());
+    public void putMark(Student s, Mark m) {
+
+        s.getTranscript().addMark(m);
+    
+        System.out.println(
+                name + " put mark for " + s.getName()
+        );
     }
 
     public List<Course> viewCourses() {
@@ -84,7 +91,7 @@ public class Teacher extends User {
         return courses;
     }
 
-    public List<String> getTeachingSubjects() {
+    public Set<String> getTeachingSubjects() {
         return teachingSubjects;
     }
 
