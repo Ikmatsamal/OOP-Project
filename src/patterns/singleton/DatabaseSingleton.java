@@ -7,11 +7,13 @@ import models.user.User;
 import models.academic.Course;
 import models.research.ResearchProject;
 
-import java.util.Collections;
-
 import java.util.*;
 
-public class DatabaseSingleton {
+public class DatabaseSingleton implements java.io.Serializable {
+
+    private static final long serialVersionUID = 1L;
+    
+    private Map<String, User> userMap;
 
     private static DatabaseSingleton instance;
 
@@ -29,6 +31,8 @@ public class DatabaseSingleton {
 
         marks = new ArrayList<>();
         lessons = new ArrayList<>();
+
+        userMap = new HashMap<>();
     }
 
     public static DatabaseSingleton getInstance() {
@@ -41,6 +45,8 @@ public class DatabaseSingleton {
     // ---------- USERS ----------
     public void addUser(User user) {
         users.add(user);
+
+        userMap.put(user.getEmail(), user);
     }
 
     public Optional<User> getUserByEmail(String email) {
