@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Student extends User {
+public class Student extends User{
 
     private int studentId;
     private String major;
