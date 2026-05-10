@@ -23,7 +23,15 @@ public class Manager extends Employee {
     }
 
     public void approveRegistration(Student s, Course c) {
-        System.out.println(name + " approved registration of " + s.getName() + " to " + c.getName());
+
+        c.enrollStudent(s);
+    
+        System.out.println(
+                name + " approved registration of "
+                        + s.getName()
+                        + " to "
+                        + c.getName()
+        );
     }
 
     public void assignCourse(Course c, Teacher t) {
