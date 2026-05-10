@@ -1,8 +1,13 @@
 package patterns.singleton;
 
+import models.academic.Mark;
+import models.academic.Lesson;
+
 import models.user.User;
 import models.academic.Course;
 import models.research.ResearchProject;
+
+import java.util.Collections;
 
 import java.util.*;
 
@@ -14,10 +19,16 @@ public class DatabaseSingleton {
     private List<Course> courses;
     private List<ResearchProject> projects;
 
+    private List<Mark> marks;
+    private List<Lesson> lessons;
+
     private DatabaseSingleton() {
         users = new ArrayList<>();
         courses = new ArrayList<>();
         projects = new ArrayList<>();
+
+        marks = new ArrayList<>();
+        lessons = new ArrayList<>();
     }
 
     public static DatabaseSingleton getInstance() {
@@ -59,4 +70,26 @@ public class DatabaseSingleton {
     public List<ResearchProject> getProjects() {
         return Collections.unmodifiableList(projects);
     }
+
+        // ---------- MARKS ----------
+
+    public void addMark(Mark mark) {
+        marks.add(mark);
+    }
+
+    public List<Mark> getMarks() {
+        return Collections.unmodifiableList(marks);
+    }
+
+
+    // ---------- LESSONS ----------
+
+    public void addLesson(Lesson lesson) {
+        lessons.add(lesson);
+    }
+
+    public List<Lesson> getLessons() {
+        return Collections.unmodifiableList(lessons);
+    }
+
 }
