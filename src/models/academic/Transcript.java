@@ -6,7 +6,9 @@ import models.user.Student;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Transcript {
+import java.io.Serializable;
+
+public class Transcript implements Serializable{
     private Student student;
     private List<Mark> marks;
 

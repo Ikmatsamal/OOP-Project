@@ -5,7 +5,9 @@ import models.user.Teacher;
 
 import java.time.LocalDate;
 
-public class Lesson {
+import java.io.Serializable;
+
+public class Lesson implements Serializable{
     private LessonType type;
     private LocalDate date;
     private String name;

@@ -1,6 +1,7 @@
 package models.user;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable, patterns.observer.Observer {
     
     protected int id;
     protected String name;
@@ -108,5 +109,12 @@ public class User {
                 ", role='" + role + '\'' +
                 ", isActive=" + isActive +
                 '}';
+    }
+
+    @Override
+    public void update(String message) {
+
+        System.out.println(name + " received news: " + message);
+
     }
 }

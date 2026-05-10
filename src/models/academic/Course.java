@@ -6,7 +6,9 @@ import models.user.Teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Course {
+import java.io.Serializable;
+
+public class Course implements Serializable{
     private String courseId;
     private String name;
     private String description;

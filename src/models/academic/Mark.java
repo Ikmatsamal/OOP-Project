@@ -3,7 +3,9 @@ package models.academic;
 import enums.GradeType;
 import models.user.Student;
 
-public class Mark {
+import java.io.Serializable;
+
+public class Mark implements Serializable{
     private double attestation1;
     private double attestation2;
     private double finalExam;
