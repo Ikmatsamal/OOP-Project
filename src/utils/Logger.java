@@ -1,28 +1,38 @@
 package utils;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Logger {
 
-    private static final DateTimeFormatter formatter =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-    private static void log(String level, String message) {
-        System.out.println("[" + level + "] "
-                + LocalDateTime.now().format(formatter)
-                + " - " + message);
-    }
+    private static final List<String> logs =
+            new ArrayList<>();
 
     public static void info(String message) {
-        log("INFO", message);
+
+        String log =
+                "[INFO] " + LocalDateTime.now()
+                        + " " + message;
+
+        logs.add(log);
+
+        System.out.println(log);
     }
 
     public static void warn(String message) {
-        log("WARN", message);
+
+        String log =
+                "[WARNING] " + LocalDateTime.now()
+                        + " " + message;
+
+        logs.add(log);
+
+        System.out.println(log);
     }
 
-    public static void error(String message) {
-        log("ERROR", message);
+    public static List<String> getLogs() {
+        return logs;
     }
+
 }
