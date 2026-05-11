@@ -6,54 +6,105 @@ import java.io.*;
 
 public class FileManager {
 
-    public static void save(DatabaseSingleton db) {
+    private static final String DATA_FOLDER = "data";
+
+    // ---------- SAVE ----------
+
+    public static void saveUsers(Object users) {
+        saveObject(users, "users.ser");
+    }
+
+    public static void saveCourses(Object courses) {
+        saveObject(courses, "courses.ser");
+    }
+
+    public static void saveProjects(Object projects) {
+        saveObject(projects, "projects.ser");
+    }
+
+    public static void saveMarks(Object marks) {
+        saveObject(marks, "marks.ser");
+    }
+
+    public static void saveLessons(Object lessons) {
+        saveObject(lessons, "lessons.ser");
+    }
+
+    // ---------- LOAD ----------
+
+    public static Object loadUsers() {
+        return loadObject("users.ser");
+    }
+
+    public static Object loadCourses() {
+        return loadObject("courses.ser");
+    }
+
+    public static Object loadProjects() {
+        return loadObject("projects.ser");
+    }
+
+    public static Object loadMarks() {
+        return loadObject("marks.ser");
+    }
+
+    public static Object loadLessons() {
+        return loadObject("lessons.ser");
+    }
+
+    // ---------- COMMON METHODS ----------
+
+    private static void saveObject(Object obj, String fileName) {
 
         try {
 
+            File folder = new File(DATA_FOLDER);
+
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
             ObjectOutputStream out =
                     new ObjectOutputStream(
-                            new FileOutputStream("database.ser")
+                            new FileOutputStream(DATA_FOLDER + "/" + fileName)
                     );
 
-            out.writeObject(db);
+            out.writeObject(obj);
 
             out.close();
 
-            System.out.println("Database saved");
+            System.out.println(fileName + " saved");
 
         } catch (Exception e) {
 
             e.printStackTrace();
 
         }
-
     }
 
-    public static DatabaseSingleton load() {
+    private static Object loadObject(String fileName) {
 
         try {
 
             ObjectInputStream in =
                     new ObjectInputStream(
-                            new FileInputStream("database.ser")
+                            new FileInputStream(DATA_FOLDER + "/" + fileName)
                     );
 
-            DatabaseSingleton db =
-                    (DatabaseSingleton) in.readObject();
+            Object obj = in.readObject();
 
             in.close();
 
-            System.out.println("Database loaded");
+            System.out.println(fileName + " loaded");
 
-            return db;
+            return obj;
 
         } catch (Exception e) {
 
-            e.printStackTrace();
+            System.out.println(fileName + " not found");
 
         }
 
         return null;
     }
-
 }
