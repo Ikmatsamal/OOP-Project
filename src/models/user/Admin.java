@@ -5,14 +5,14 @@ import java.util.List;
 
 public class Admin extends User {
 
-    private String adminId;
+    
     private List<String> permissions;
     private boolean canManageUsers;
     private boolean canViewLogs;
 
-    public Admin(int id, String name, String email, String phoneNumber, String password, String adminId) {
-        super(id, name, email, phoneNumber, password, "ADMIN");
-        this.adminId = adminId;
+    public Admin(int id, String name, String email, String password) {
+        super(id, name, email, password, "ADMIN");
+        
         this.permissions = new ArrayList<>();
         this.canManageUsers = true;
         this.canViewLogs = true;
@@ -40,9 +40,6 @@ public class Admin extends User {
         permissions.add(permission);
     }
 
-    public String getAdminId() {
-        return adminId;
-    }
 
     public List<String> getPermissions() {
         return permissions;
@@ -69,7 +66,6 @@ public class Admin extends User {
     @Override
     public void displayInfo() {
         super.displayInfo();
-        System.out.println("Admin ID: " + adminId);
         System.out.println("Can Manage Users: " + canManageUsers);
         System.out.println("Can View Logs: " + canViewLogs);
     }
@@ -78,7 +74,6 @@ public class Admin extends User {
     public String toString() {
         return "Admin{" +
                 "name='" + name + '\'' +
-                ", adminId='" + adminId + '\'' +
                 '}';
     }
 }

@@ -6,7 +6,6 @@ public class User implements Serializable, patterns.observer.Observer {
     protected int id;
     protected String name;
     protected String email;
-    protected String phoneNumber;
     protected String password;
     protected String role;
     protected boolean isActive;
@@ -14,11 +13,10 @@ public class User implements Serializable, patterns.observer.Observer {
     protected long updatedAt;
 
     
-    public User(int id, String name, String email, String phoneNumber, String password, String role) {
+    public User(int id, String name, String email, String password, String role) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.phoneNumber = phoneNumber;
         this.password = password;
         this.role = role;
         this.isActive = true;
@@ -39,9 +37,7 @@ public class User implements Serializable, patterns.observer.Observer {
         return email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+    
 
     public String getRole() {
         return role;
@@ -74,10 +70,7 @@ public class User implements Serializable, patterns.observer.Observer {
         this.updatedAt = System.currentTimeMillis();
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-        this.updatedAt = System.currentTimeMillis();
-    }
+    
 
     public void setPassword(String password) {
         this.password = password;
@@ -95,7 +88,6 @@ public class User implements Serializable, patterns.observer.Observer {
         System.out.println("ID: " + id);
         System.out.println("Name: " + name);
         System.out.println("Email: " + email);
-        System.out.println("Phone: " + phoneNumber);
         System.out.println("Role: " + role);
         System.out.println("Active: " + isActive);
     }

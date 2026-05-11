@@ -17,9 +17,8 @@ public class Main {
     	        1,
     	        "Aidana",
     	        "aidana@example.com",
-    	        "+77475662156",
+    	        
     	        "1234",
-    	        1001,
     	        "Computer Science",
     	        2
     	);

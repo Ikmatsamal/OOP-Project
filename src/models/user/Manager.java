@@ -10,10 +10,11 @@ public class Manager extends Employee {
 
     private ManagerType type;
 
-    public Manager(int id, String name, String email, String phoneNumber,
-                   String password, String employeeId, String department,
-                   String jobTitle, ManagerType type) {
-        super(id, name, email, phoneNumber, password, employeeId, department, jobTitle);
+    public Manager(int id, String name, String email,
+            String password, ManagerType type) {
+
+    	super(id, name, email, password);
+
         this.role = "MANAGER";
         this.type = type;
     }
@@ -54,11 +55,12 @@ public class Manager extends Employee {
     public void createReport() {
         System.out.println(name + " is creating report");
     }
-
     @Override
     public String toString() {
-        return "Manager{" +
-                "name='" + name + '\'' +
+        return "Manager {" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", email='" + getEmail() + '\'' +
                 ", type=" + type +
                 '}';
     }

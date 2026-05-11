@@ -20,9 +20,7 @@ public class UserFactory {
                         id,
                         name,
                         email,
-                        phone,
                         password,
-                        1000 + id,
                         "Computer Science",
                         2
                 );
@@ -32,11 +30,9 @@ public class UserFactory {
                         id,
                         name,
                         email,
-                        phone,
                         password,
-                        "T-" + id,
-                        "FIT",
-                        "Professor"
+                        "FIT"
+                        
                 );
 
             case "MANAGER":
@@ -44,11 +40,7 @@ public class UserFactory {
                         id,
                         name,
                         email,
-                        phone,
                         password,
-                        "M-" + id,
-                        "FIT",
-                        "Manager",
                         enums.ManagerType.OR
                 );
 
@@ -57,9 +49,7 @@ public class UserFactory {
                         id,
                         name,
                         email,
-                        phone,
-                        password,
-                        "ADMIN-" + id
+                        password
                 );
 
             default:

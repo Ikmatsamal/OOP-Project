@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public class Student extends User{
 
-    private int studentId;
+    
     private String major;
     private int year;
     private double gpa;
@@ -25,12 +25,10 @@ public class Student extends User{
     private List<Course> enrolledCourses;
     private Transcript transcript;
 
-    public Student(int id, String name, String email, String phoneNumber,
-                   String password, int studentId, String major, int year) {
-        super(id, name, email, phoneNumber, password, "STUDENT");
-
-        this.studentId = studentId;
-        this.major = major;
+    public Student(int id, String name, String email,
+                   String password, String major, int year) {
+    	super(id, name, email, password, "STUDENT");
+    	this.major = major;
         this.year = year;
         this.gpa = 0.0;
         this.credits = 0;
@@ -85,7 +83,8 @@ public class Student extends User{
     @Override
     public String toString() {
         return "Student{" +
-                "studentId=" + studentId +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", major='" + major + '\'' +
                 ", year=" + year +
                 ", gpa=" + gpa +
@@ -94,14 +93,4 @@ public class Student extends User{
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Student student)) return false;
-        return studentId == student.studentId;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(studentId);
-    }
 }

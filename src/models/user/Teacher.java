@@ -11,21 +11,20 @@ import models.academic.Mark;
 
 public class Teacher extends User {
 
-    private String employeeId;
     private String department;
-    private String qualification;
+    
 
     private List<Course> courses;
     private double rating;
     private Set<String> teachingSubjects;
 
-    public Teacher(int id, String name, String email, String phoneNumber,
-                   String password, String employeeId, String department, String qualification) {
-        super(id, name, email, phoneNumber, password, "TEACHER");
+    public Teacher(int id, String name, String email, 
+                   String password, String department) {
+        super(id, name, email, password, "TEACHER");
 
-        this.employeeId = employeeId;
+        
         this.department = department;
-        this.qualification = qualification;
+        
 
         this.courses = new ArrayList<>();
         this.teachingSubjects = new HashSet<>();
@@ -71,17 +70,13 @@ public class Teacher extends User {
         System.out.println(name + " graded student " + studentId + " with: " + grade);
     }
 
-    public String getEmployeeId() {
-        return employeeId;
-    }
+    
 
     public String getDepartment() {
         return department;
     }
 
-    public String getQualification() {
-        return qualification;
-    }
+    
 
     public double getRating() {
         return rating;
@@ -100,38 +95,24 @@ public class Teacher extends User {
         this.updatedAt = System.currentTimeMillis();
     }
 
-    public void setQualification(String qualification) {
-        this.qualification = qualification;
-        this.updatedAt = System.currentTimeMillis();
-    }
+   
+    
 
     @Override
     public void displayInfo() {
         super.displayInfo();
-        System.out.println("Employee ID: " + employeeId);
+        
         System.out.println("Department: " + department);
-        System.out.println("Qualification: " + qualification);
         System.out.println("Rating: " + rating);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Teacher)) return false;
-        Teacher teacher = (Teacher) o;
-        return Objects.equals(employeeId, teacher.employeeId);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(employeeId);
-    }
+   
 
     @Override
     public String toString() {
         return "Teacher{" +
-                "name='" + name + '\'' +
-                ", employeeId='" + employeeId + '\'' +
+                "name='" + name + '\''  +
                 ", department='" + department + '\'' +
                 ", rating=" + rating +
                 '}';
