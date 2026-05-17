@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import models.academic.Course;
-import models.system.News;
 import models.user.Student;
 import models.user.Teacher;
 import models.system.News;
@@ -22,39 +21,119 @@ public class    StudentView {
     public void show(Student student) {
 
         while (true) {
-            System.out.println("\n=== STUDENT MENU ===");
-            System.out.println("1. View available courses");
-            System.out.println("2. Enroll in a course");
-            System.out.println("3. View my enrolled courses");
-            System.out.println("4. View transcript");
-            System.out.println("5. View marks for a course");
-            System.out.println("6. View teacher info for a course");
-            System.out.println("7. Rate a teacher");
-            System.out.println("8. Research menu");
-            System.out.println("9. View news");
+
+            System.out.println("\n===== STUDENT MENU =====");
+            System.out.println("1. Courses");
+            System.out.println("2. Academic");
+            System.out.println("3. Teachers");
+            System.out.println("4. Research");
+            System.out.println("5. News");
             System.out.println("0. Logout");
 
             int choice = readInt("Choose option: ");
 
             switch (choice) {
-                case 1 -> viewAvailableCourses(student);
-                case 2 -> enrollInCourse(student);
-                case 3 -> viewMyCourses(student);
-                case 4 -> viewTranscript(student);
-                case 5 -> viewMarks(student);
-                case 6 -> viewCourseTeacherInfo(student);
-                case 7 -> rateTeacher(student);
-                case 8 -> new ResearchView().show(student);
-                case 9 -> viewNews();
+
+                case 1 -> coursesMenu(student);
+
+                case 2 -> academicMenu(student);
+
+                case 3 -> teachersMenu(student);
+
+                case 4 -> new ResearchView().show(student);
+
+                case 5 -> viewNews();
+
                 case 0 -> {
                     Logger.info("Logout: " + student.getEmail());
                     return;
                 }
+
                 default -> System.out.println("Invalid option.");
             }
         }
     }
+    
+    private void coursesMenu(Student student) {
 
+        while (true) {
+
+            System.out.println("\n===== COURSES MENU =====");
+            System.out.println("1. View available courses");
+            System.out.println("2. Enroll in course");
+            System.out.println("3. View my courses");
+            System.out.println("0. Back");
+
+            int choice = readInt("Choose option: ");
+
+            switch (choice) {
+
+                case 1 -> viewAvailableCourses(student);
+
+                case 2 -> enrollInCourse(student);
+
+                case 3 -> viewMyCourses(student);
+
+                case 0 -> {
+                    return;
+                }
+
+                default -> System.out.println("Invalid option.");
+            }
+        }
+    }
+    
+    private void academicMenu(Student student) {
+
+        while (true) {
+
+            System.out.println("\n===== ACADEMIC MENU =====");
+            System.out.println("1. View transcript");
+            System.out.println("2. View marks");
+            System.out.println("0. Back");
+
+            int choice = readInt("Choose option: ");
+
+            switch (choice) {
+
+                case 1 -> viewTranscript(student);
+
+                case 2 -> viewMarks(student);
+
+                case 0 -> {
+                    return;
+                }
+
+                default -> System.out.println("Invalid option.");
+            }
+        }
+    }
+    
+    private void teachersMenu(Student student) {
+
+        while (true) {
+
+            System.out.println("\n===== TEACHERS MENU =====");
+            System.out.println("1. View teacher info");
+            System.out.println("2. Rate teacher");
+            System.out.println("0. Back");
+
+            int choice = readInt("Choose option: ");
+
+            switch (choice) {
+
+                case 1 -> viewCourseTeacherInfo(student);
+
+                case 2 -> rateTeacher(student);
+
+                case 0 -> {
+                    return;
+                }
+
+                default -> System.out.println("Invalid option.");
+            }
+        }
+    }
     private void viewAvailableCourses(Student student) {
         List<Course> courses = courseService.getAvailableCoursesFor(student);
 
