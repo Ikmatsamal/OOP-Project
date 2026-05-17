@@ -239,40 +239,65 @@ public class ManagerView {
 
     private void assignCourseToTeacher() {
 
-        System.out.print("Enter course ID: ");
-        String courseId = sc.nextLine();
+        List<Course> courses = courseService.getAllCourses();
 
-        System.out.print("Enter teacher email: ");
-        String teacherEmail = sc.nextLine();
-
-        Course course =
-                courseService.findCourseById(courseId)
-                        .orElse(null);
-
-        if (course == null) {
-            System.out.println("Course not found");
+        if (courses.isEmpty()) {
+            System.out.println("No courses available");
             return;
         }
 
-        Teacher teacher =
+        System.out.println("\n===== COURSES =====");
+        for (int i = 0; i < courses.size(); i++) {
+            System.out.println((i + 1) + ". " + courses.get(i));
+        }
+
+        int courseChoice = readInt("Choose course: ");
+
+        if (courseChoice < 1 || courseChoice > courses.size()) {
+            System.out.println("Invalid course choice");
+            return;
+        }
+
+        Course course = courses.get(courseChoice - 1);
+
+        List<Teacher> teachers =
                 DatabaseSingleton.getInstance()
                         .getUsers()
                         .stream()
                         .filter(user -> user instanceof Teacher)
                         .map(user -> (Teacher) user)
-                        .filter(t -> t.getEmail()
-                                .equalsIgnoreCase(teacherEmail))
-                        .findFirst()
-                        .orElse(null);
+                        .toList();
 
-        if (teacher == null) {
-            System.out.println("Teacher not found");
+        if (teachers.isEmpty()) {
+            System.out.println("No teachers available");
             return;
         }
 
+        System.out.println("\n===== TEACHERS =====");
+        for (int i = 0; i < teachers.size(); i++) {
+            System.out.println((i + 1) + ". " + teachers.get(i));
+        }
+
+        int teacherChoice = readInt("Choose teacher: ");
+
+        if (teacherChoice < 1 || teacherChoice > teachers.size()) {
+            System.out.println("Invalid teacher choice");
+            return;
+        }
+
+        Teacher teacher = teachers.get(teacherChoice - 1);
+
         teacher.manageCourse(course);
+        course.addInstructor(teacher);
+
+        DatabaseSingleton.getInstance().save();
 
         System.out.println("Course assigned successfully");
+    }
+      
+    private int readInt(String message) {
+        System.out.print(message);
+        return readInt();
     }
     
    
