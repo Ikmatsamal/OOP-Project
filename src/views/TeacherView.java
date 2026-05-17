@@ -25,6 +25,9 @@ public class TeacherView {
             System.out.println("1. View my courses");
             System.out.println("2. Manage course");
             System.out.println("3. View news");
+            System.out.println("4. Generate report");
+            System.out.println("5. Send message");
+            System.out.println("6. Send complaint");
             System.out.println("0. Logout");
 
             System.out.print("Choose option: ");
@@ -33,19 +36,23 @@ public class TeacherView {
 
             switch (choice) {
 
-                case 1 -> viewCourses(teacher);
+            case 1 -> viewCourses(teacher);
 
-                case 2 -> manageCourse(teacher);
+            case 2 -> manageCourse(teacher);
 
-                case 3 -> viewNews();
+            case 3 -> viewNews();
 
-                case 0 -> {
-                    System.out.println("Logout...");
-                    return;
-                }
+            case 4 -> teacherService.generateReport(teacher);
+            case 5 -> sendMessage(teacher);
+            case 6 -> sendComplaint(teacher);
 
-                default -> System.out.println("Invalid option");
+            case 0 -> {
+                System.out.println("Logout...");
+                return;
             }
+
+            default -> System.out.println("Invalid option");
+        }
         }
     }
 
@@ -295,6 +302,35 @@ public class TeacherView {
                         "Enter valid number: "
                 );
             }
+        }
+    }
+    
+ // SEND MESSAGE
+
+    private void sendMessage(Teacher teacher) {
+        System.out.print("Receiver email: ");
+        String email = sc.nextLine();
+
+        System.out.print("Message: ");
+        String text = sc.nextLine();
+
+        try {
+            teacherService.sendMessage(teacher, email, text);
+            System.out.println("Message sent successfully");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void sendComplaint(Teacher teacher) {
+        System.out.print("Complaint text: ");
+        String text = sc.nextLine();
+
+        try {
+            teacherService.sendComplaint(teacher, text);
+            System.out.println("Complaint submitted successfully");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }

@@ -1,6 +1,7 @@
 package models.user;
+import interfaces.MessageSender;
 
-public class Employee extends User {
+public class Employee extends User implements MessageSender{
     private double salary;
 
     public Employee(int id, String name, String email, 
@@ -31,6 +32,14 @@ public class Employee extends User {
 
     public void sendComplaint(String complaint) {
         System.out.println(name + " submitted complaint: " + complaint);
+    }
+    
+    @Override
+    public void sendMessage(Employee receiver, String text) {
+        System.out.println(
+                "Message sent to "
+                        + receiver.getEmail()
+        );
     }
 
     @Override

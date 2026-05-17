@@ -1,6 +1,8 @@
 package patterns.singleton;
 
 import models.academic.Mark;
+import models.system.Message;
+import models.system.Complaint;
 import models.academic.Lesson;
 
 import models.user.*;
@@ -15,6 +17,8 @@ import java.util.*;
 public class DatabaseSingleton implements java.io.Serializable {
 
     private List<News> news;
+    private List<Message> messages;
+    private List<Complaint> complaints;
 
     private static final long serialVersionUID = 1L;
     
@@ -40,6 +44,9 @@ public class DatabaseSingleton implements java.io.Serializable {
         userMap = new HashMap<>();
         
         news = new ArrayList<>();
+        
+        messages = new ArrayList<>();
+        complaints = new ArrayList<>();
     }
 
     public static DatabaseSingleton getInstance() {
@@ -141,6 +148,15 @@ public class DatabaseSingleton implements java.io.Serializable {
     public List<News> getNews() {
         return news;
     }
+    
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public List<Complaint> getComplaints() {
+        return complaints;
+    }
+    
     public void addNews(News newsItem) {
         news.add(newsItem);
         save();
@@ -154,6 +170,8 @@ public class DatabaseSingleton implements java.io.Serializable {
         Object loadedMarks = FileManager.loadMarks();
         Object loadedLessons = FileManager.loadLessons();
         Object loadedNews = FileManager.loadNews();
+        Object loadedMessages = FileManager.loadMessages();
+        Object loadedComplaints = FileManager.loadComplaints();
 
         if (loadedNews != null) {
             news = (List<News>) loadedNews;
@@ -178,6 +196,16 @@ public class DatabaseSingleton implements java.io.Serializable {
         if (loadedLessons != null) {
             lessons = (List<Lesson>) loadedLessons;
         }
+        if (loadedNews != null) {
+            news = (List<News>) loadedNews;
+        }
+        if (loadedMessages != null) {
+            messages = (List<Message>) loadedMessages;
+        }
+
+        if (loadedComplaints != null) {
+            complaints = (List<Complaint>) loadedComplaints;
+        }
 
         rebuildUserMap();
     }
@@ -197,6 +225,8 @@ public class DatabaseSingleton implements java.io.Serializable {
         FileManager.saveProjects(projects);
         FileManager.saveMarks(marks);
         FileManager.saveLessons(lessons);
+        FileManager.saveMessages(messages);
+        FileManager.saveComplaints(complaints);
     }
     
     public User findUserById(int id) {

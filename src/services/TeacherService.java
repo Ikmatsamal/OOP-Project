@@ -1,6 +1,9 @@
 package services;
 
 import java.util.List;
+import models.system.Message;
+import models.system.Complaint;
+import patterns.singleton.DatabaseSingleton;
 
 import models.academic.Course;
 import models.academic.Mark;
@@ -39,5 +42,38 @@ public class TeacherService {
 
     public void generateReport(Teacher teacher) {
         teacher.generateMarkReport();
+    }
+    
+    public void sendMessage(Teacher teacher, String receiverEmail, String text) {
+        if (receiverEmail == null || receiverEmail.isBlank()) {
+            throw new IllegalArgumentException("Receiver email cannot be empty");
+        }
+
+        if (text == null || text.isBlank()) {
+            throw new IllegalArgumentException("Message cannot be empty");
+        }
+
+        Message message = new Message(
+                teacher.getEmail(),
+                receiverEmail,
+                text
+        );
+
+        DatabaseSingleton.getInstance().getMessages().add(message);
+        DatabaseSingleton.getInstance().save();
+    }
+
+    public void sendComplaint(Teacher teacher, String text) {
+        if (text == null || text.isBlank()) {
+            throw new IllegalArgumentException("Complaint cannot be empty");
+        }
+
+        Complaint complaint = new Complaint(
+                teacher.getEmail(),
+                text
+        );
+
+        DatabaseSingleton.getInstance().getComplaints().add(complaint);
+        DatabaseSingleton.getInstance().save();
     }
 }

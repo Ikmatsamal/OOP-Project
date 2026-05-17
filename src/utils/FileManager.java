@@ -1,7 +1,9 @@
 package utils;
 
 import patterns.singleton.DatabaseSingleton;
-
+import models.system.Message;
+import models.system.Complaint;
+import java.util.List;
 import java.io.*;
 
 public class FileManager {
@@ -33,6 +35,14 @@ public class FileManager {
     public static void saveLessons(Object lessons) {
         saveObject(lessons, "lessons.ser");
     }
+    
+    public static void saveMessages(List<Message> messages) {
+        saveObject(messages, "data/messages.ser");
+    }
+
+public static void saveComplaints(List<Complaint> complaints) {
+    saveObject(complaints, "data/complaints.ser");
+}
 
     // ---------- LOAD ----------
 
@@ -59,6 +69,16 @@ public class FileManager {
     public static Object loadLessons() {
         return loadObject("lessons.ser");
     }
+    
+
+public static Object loadMessages() {
+    return loadObject("data/messages.ser");
+}
+
+
+public static Object loadComplaints() {
+    return loadObject("data/complaints.ser");
+}
 
     // ---------- COMMON METHODS ----------
 
