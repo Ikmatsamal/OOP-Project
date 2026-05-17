@@ -211,6 +211,11 @@ public class TeacherView {
                 
                     return;
                 }
+
+                if (att1 + att2 > 60) {
+                    System.out.println("Total attestation cannot exceed 60");
+                    return;
+                }
                 
                 System.out.print("Final exam (0-40): ");
                 
