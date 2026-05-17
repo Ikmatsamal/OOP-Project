@@ -75,6 +75,7 @@ public class ManagerView {
             case 7:
                 manager.createReport();
                 break;
+            
 
             case 8:
                 viewStudentsSortedByGPA();
