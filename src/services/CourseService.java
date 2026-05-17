@@ -1,6 +1,7 @@
 package services;
 
 import models.academic.Course;
+import enums.Major;
 import models.user.Student;
 import patterns.singleton.DatabaseSingleton;
 
@@ -41,6 +42,40 @@ public class CourseService {
 
         student.registerCourse(course);
         course.enrollStudent(student);
+        db.save();
+    }
+    
+    
+    public void addCourseForRegistration(
+            String id,
+            String name,
+            String description,
+            Major major,
+            int credits
+    ) {
+
+        boolean exists = db.getCourses()
+                .stream()
+                .anyMatch(course ->
+                        course.getCourseId()
+                                .equalsIgnoreCase(id));
+
+        if (exists) {
+            throw new IllegalArgumentException(
+                    "Course with this ID already exists."
+            );
+        }
+
+        Course course = new Course(
+                id,
+                name,
+                description,
+                major,
+                credits
+        );
+
+        db.getCourses().add(course);
+
         db.save();
     }
 }

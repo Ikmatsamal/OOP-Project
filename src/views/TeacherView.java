@@ -2,6 +2,7 @@ package views;
 
 import java.util.List;
 import java.util.Scanner;
+import models.system.Message;
 
 import models.academic.Course;
 import models.system.News;
@@ -28,6 +29,8 @@ public class TeacherView {
             System.out.println("4. Generate report");
             System.out.println("5. Send message");
             System.out.println("6. Send complaint");
+            System.out.println("7. View inbox");
+            System.out.println("8. View sent messages");
             System.out.println("0. Logout");
 
             System.out.print("Choose option: ");
@@ -45,6 +48,8 @@ public class TeacherView {
             case 4 -> teacherService.generateReport(teacher);
             case 5 -> sendMessage(teacher);
             case 6 -> sendComplaint(teacher);
+            case 7 -> viewInbox(teacher);
+            case 8 -> viewSentMessages(teacher);
 
             case 0 -> {
                 System.out.println("Logout...");
@@ -332,5 +337,31 @@ public class TeacherView {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+    
+    private void viewInbox(Teacher teacher) {
+        List<Message> messages =
+                teacherService.getInbox(teacher);
+
+        if (messages.isEmpty()) {
+            System.out.println("Inbox is empty");
+            return;
+        }
+
+        System.out.println("\n===== INBOX =====");
+        messages.forEach(System.out::println);
+    }
+
+    private void viewSentMessages(Teacher teacher) {
+        List<Message> messages =
+                teacherService.getSentMessages(teacher);
+
+        if (messages.isEmpty()) {
+            System.out.println("No sent messages");
+            return;
+        }
+
+        System.out.println("\n===== SENT MESSAGES =====");
+        messages.forEach(System.out::println);
     }
 }

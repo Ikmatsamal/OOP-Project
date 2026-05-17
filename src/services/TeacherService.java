@@ -76,4 +76,22 @@ public class TeacherService {
         DatabaseSingleton.getInstance().getComplaints().add(complaint);
         DatabaseSingleton.getInstance().save();
     }
+    
+    public List<Message> getInbox(Teacher teacher) {
+        return DatabaseSingleton
+                .getInstance()
+                .getMessages()
+                .stream()
+                .filter(m -> m.getReceiverEmail().equals(teacher.getEmail()))
+                .toList();
+    }
+
+    public List<Message> getSentMessages(Teacher teacher) {
+        return DatabaseSingleton
+                .getInstance()
+                .getMessages()
+                .stream()
+                .filter(m -> m.getSenderEmail().equals(teacher.getEmail()))
+                .toList();
+    }
 }

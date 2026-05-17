@@ -3,6 +3,7 @@ import models.user.User;
 import java.util.List;
 
 import java.util.Scanner;
+import enums.Major;
 
 import models.user.*;
 import enums.*;
@@ -23,6 +24,9 @@ public class Adminview {
         	System.out.println("5. Delete user");
         	System.out.println("6. Update user");
         	System.out.println("7. View courses");
+        	System.out.println("8. View inbox");
+        	System.out.println("9. View sent messages");
+        	System.out.println("10. Send message");
         	System.out.println("0. Logout");
 
         	int choice = readInt("Choose: ");
@@ -142,30 +146,30 @@ public class Adminview {
 
         int majorOption = Integer.parseInt(sc.nextLine());
 
-        String major = "";
+        Major major;
 
         switch (majorOption) {
 
-            case 1:
-                major = "Information Systems";
-                break;
+        case 1:
+            major = Major.INFORMATION_SYSTEMS;
+            break;
 
-            case 2:
-                major = "Computer Science";
-                break;
+        case 2:
+            major = Major.COMPUTER_SCIENCE;
+            break;
 
-            case 3:
-                major = "Cyber Security";
-                break;
+        case 3:
+            major = Major.CYBER_SECURITY;
+            break;
 
-            case 4:
-                major = "Software Engineering";
-                break;
+        case 4:
+            major = Major.SOFTWARE_ENGINEERING;
+            break;
 
-            default:
-                System.out.println("Invalid major option.");
-                return;
-        }
+        default:
+            System.out.println("Invalid major option.");
+            return;
+    }
 
         System.out.println("Select study year:");
         System.out.println("1. First Year");

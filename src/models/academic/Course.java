@@ -1,6 +1,7 @@
 package models.academic;
 
 import models.user.Student;
+import enums.Major;
 import models.user.Teacher;
 
 import java.util.ArrayList;
@@ -14,13 +15,13 @@ public class Course implements Serializable{
     private String courseId;
     private String name;
     private String description;
-    private String major;
+    private Major major;
     private int credits;
     private List<Teacher> instructors;
     private List<Student> enrolledStudents;
     private List<Lesson> lessons;
 
-    public Course(String courseId, String name, String description, String major, int credits) {
+    public Course(String courseId, String name, String description,  Major major, int credits) {
         this.courseId = courseId;
         this.name = name;
         this.description = description;
@@ -48,6 +49,7 @@ public class Course implements Serializable{
             System.out.println(s.getName() + " enrolled in " + name);
         }
     }
+    
 
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,7 +66,7 @@ public class Course implements Serializable{
     public String getCourseId() { return courseId; }
     public String getName() { return name; }
     public String getDescription() { return description; }
-    public String getMajor() { return major; }
+    public Major getMajor() { return major; }
     public int getCredits() { return credits; }
     public List<Teacher> getInstructors() { return instructors; }
     public List<Student> getEnrolledStudents() { return enrolledStudents; }

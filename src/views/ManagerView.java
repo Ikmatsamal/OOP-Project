@@ -6,6 +6,7 @@ import models.user.Teacher;
 import models.academic.Course;
 import models.system.News;
 import patterns.singleton.DatabaseSingleton;
+import enums.Major;
 
 import services.CourseService;
 
@@ -33,11 +34,12 @@ public class ManagerView {
             System.out.println("2. View teachers");
             System.out.println("3. View courses");
             System.out.println("4. Assign course to teacher");
-            System.out.println("5. Approve student registration");
-            System.out.println("6. Create report");
-            System.out.println("7. View students by GPA");
-            System.out.println("8. View teachers alphabetically");
-            System.out.println("9. Publish news");
+            System.out.println("5. Add course for registration");
+            System.out.println("6. Approve student registration");
+            System.out.println("7. Create report");
+            System.out.println("8. View students by GPA");
+            System.out.println("9. View teachers alphabetically");
+            System.out.println("10. Publish news");
             System.out.println("0. Logout");
 
             System.out.print("Choose option: ");
@@ -46,49 +48,53 @@ public class ManagerView {
 
             switch (choice) {
 
-                case 1:
-                    viewStudents();
-                    break;
+            case 1:
+                viewStudents();
+                break;
 
-                case 2:
-                    viewTeachers();
-                    break;
+            case 2:
+                viewTeachers();
+                break;
 
-                case 3:
-                    viewCourses();
-                    break;
+            case 3:
+                viewCourses();
+                break;
 
-                case 4:
-                    assignCourseToTeacher();
-                    break;
+            case 4:
+                addCourseForRegistration();
+                break;
 
-                case 5:
-                    approveRegistration();
-                    break;
+            case 5:
+                assignCourseToTeacher();
+                break;
 
-                case 6:
-                    manager.createReport();
-                    break;
-                
-                case 7:
-                    viewStudentsSortedByGPA();
-                    break;
-                    
-                case 8:
-                    viewTeachersAlphabetically();
-                    break;
-                    
-                case 9:
-                    publishNews(manager);
-                    break;
+            case 6:
+                approveRegistration();
+                break;
 
-                case 0:
-                    System.out.println("Logout...");
-                    return;
+            case 7:
+                manager.createReport();
+                break;
 
-                default:
-                    System.out.println("Invalid option");
-            }
+            case 8:
+                viewStudentsSortedByGPA();
+                break;
+
+            case 9:
+                viewTeachersAlphabetically();
+                break;
+
+            case 10:
+                publishNews(manager);
+                break;
+
+            case 0:
+                System.out.println("Logout...");
+                return;
+
+            default:
+                System.out.println("Invalid option");
+        }
         }
     }
 
@@ -152,7 +158,77 @@ public class ManagerView {
 
         courses.forEach(System.out::println);
     }
+    
+    
+    private void addCourseForRegistration() {
 
+        System.out.print("Course ID: ");
+        String id = sc.nextLine();
+
+        System.out.print("Course name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Description: ");
+        String description = sc.nextLine();
+
+        System.out.println("Select major:");
+        System.out.println("1. INFORMATION_SYSTEMS");
+        System.out.println("2. COMPUTER_SCIENCE");
+        System.out.println("3. CYBER_SECURITY");
+        System.out.println("4. SOFTWARE_ENGINEERING");
+        
+        System.out.print("Option: ");
+        int majorOption = readInt();
+
+        Major major;
+
+        switch (majorOption) {
+
+            case 1:
+                major = Major.INFORMATION_SYSTEMS;
+                break;
+
+            case 2:
+                major = Major.COMPUTER_SCIENCE;
+                break;
+
+            case 3:
+                major = Major.CYBER_SECURITY;
+                break;
+
+            case 4:
+                major = Major.SOFTWARE_ENGINEERING;
+                break;
+
+            default:
+                System.out.println("Invalid major");
+                return;
+        }
+        
+        System.out.print("Credits: ");
+        int credits = readInt();
+
+        try {
+
+            courseService.addCourseForRegistration(
+                    id,
+                    name,
+                    description,
+                    major,
+                    credits
+            );
+
+            System.out.println(
+                    "Course added successfully"
+            );
+
+        } catch (Exception e) {
+
+            System.out.println(
+                    "Error: " + e.getMessage()
+            );
+        }
+    }
     // ASSIGN COURSE
 
     private void assignCourseToTeacher() {

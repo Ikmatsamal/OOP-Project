@@ -1,6 +1,7 @@
 package models.user;
 
 import models.academic.Course;
+import enums.Major;
 import interfaces.Researchable;
 import models.academic.Mark;
 import models.academic.Transcript;
@@ -17,7 +18,7 @@ import java.util.Objects;
 public class Student extends User implements Researchable{
 
     
-    private String major;
+	private Major major;
     private int year;
     private double gpa;
     private int credits;
@@ -28,7 +29,7 @@ public class Student extends User implements Researchable{
     private ResearcherDecorator researcherPart;
 
     public Student(int id, String name, String email,
-                   String password, String major, int year) {
+                   String password, Major major, int year) {
     	super(id, name, email, password, "STUDENT");
     	this.major = major;
         this.year = year;
@@ -64,6 +65,9 @@ public class Student extends User implements Researchable{
 
     public double getGPA() {
         return gpa;
+    }
+    public Major getMajor() {
+        return major;
     }
 
     

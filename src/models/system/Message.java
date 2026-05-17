@@ -15,6 +15,14 @@ public class Message implements Serializable {
         this.text = text;
         this.sentAt = LocalDateTime.now();
     }
+    
+    public String getSenderEmail() {
+        return senderEmail;
+    }
+
+    public String getReceiverEmail() {
+        return receiverEmail;
+    }
 
     @Override
     public String toString() {
