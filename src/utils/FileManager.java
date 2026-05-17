@@ -37,11 +37,11 @@ public class FileManager {
     }
     
     public static void saveMessages(List<Message> messages) {
-        saveObject(messages, "data/messages.ser");
+        saveObject(messages, "messages.ser");
     }
 
 public static void saveComplaints(List<Complaint> complaints) {
-    saveObject(complaints, "data/complaints.ser");
+    saveObject(complaints, "complaints.ser");
 }
 
     // ---------- LOAD ----------
@@ -72,12 +72,12 @@ public static void saveComplaints(List<Complaint> complaints) {
     
 
 public static Object loadMessages() {
-    return loadObject("data/messages.ser");
+    return loadObject("messages.ser");
 }
 
 
 public static Object loadComplaints() {
-    return loadObject("data/complaints.ser");
+    return loadObject("complaints.ser");
 }
 
     // ---------- COMMON METHODS ----------
