@@ -22,8 +22,10 @@ public class Mark implements Serializable{
     }
 
     public double getFinalGrade() {
-        // Стандартная формула: 30% + 30% + 40%
-        return (attestation1 * 0.3) + (attestation2 * 0.3) + (finalExam * 0.4);
+
+        return attestation1
+                + attestation2
+                + finalExam;
     }
 
     public GradeType getGradeType() {

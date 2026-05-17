@@ -69,8 +69,9 @@ public class Transcript implements Serializable{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("=== Transcript for ").append(student.getName())
-          .append(" ").append(student.getName()).append(" ===\n");
+        sb.append("=== Transcript for ")
+            .append(student.getName())
+            .append(" ===\n");
         for (Mark m : marks) {
             sb.append("  ").append(m.getCourse().getName())
               .append(" → ").append(m.getFinalGrade())

@@ -186,14 +186,44 @@ public class TeacherView {
         Student student =
                 students.get(choice - 1);
 
-        System.out.print("Attestation 1: ");
-        double att1 = readDouble();
+                System.out.print("Attestation 1 (0-30): ");
 
-        System.out.print("Attestation 2: ");
-        double att2 = readDouble();
-
-        System.out.print("Final exam: ");
-        double finalExam = readDouble();
+                double att1 = readDouble();
+                
+                if (att1 < 0 || att1 > 30) {
+                
+                    System.out.println(
+                            "Attestation 1 must be between 0 and 30"
+                    );
+                
+                    return;
+                }
+                
+                System.out.print("Attestation 2 (0-30): ");
+                
+                double att2 = readDouble();
+                
+                if (att2 < 0 || att2 > 30) {
+                
+                    System.out.println(
+                            "Attestation 2 must be between 0 and 30"
+                    );
+                
+                    return;
+                }
+                
+                System.out.print("Final exam (0-40): ");
+                
+                double finalExam = readDouble();
+                
+                if (finalExam < 0 || finalExam > 40) {
+                
+                    System.out.println(
+                            "Final exam must be between 0 and 40"
+                    );
+                
+                    return;
+        }
 
         teacherService.putMark(
                 teacher,
