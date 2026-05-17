@@ -40,6 +40,7 @@ public class ManagerView {
             System.out.println("8. View students by GPA");
             System.out.println("9. View teachers alphabetically");
             System.out.println("10. Publish news");
+            System.out.println("11. View news");
             System.out.println("0. Logout");
 
             System.out.print("Choose option: ");
@@ -86,6 +87,10 @@ public class ManagerView {
 
             case 10:
                 publishNews(manager);
+                break;
+                
+            case 11:
+                viewNews();
                 break;
 
             case 0:
@@ -433,6 +438,23 @@ public class ManagerView {
         System.out.println(
                 "Average GPA: " + avgGpa
         );
+    }
+    
+    private void viewNews() {
+
+        List<News> newsList =
+                DatabaseSingleton.getInstance()
+                        .getNews();
+
+        if (newsList.isEmpty()) {
+
+            System.out.println("No news available");
+            return;
+        }
+
+        System.out.println("\n===== NEWS =====");
+
+        newsList.forEach(System.out::println);
     }
 
     // READ INT
