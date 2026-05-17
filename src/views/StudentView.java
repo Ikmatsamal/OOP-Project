@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import models.academic.Course;
 import models.user.Student;
+import models.user.Teacher;
 import services.CourseService;
 import services.ReportService;
 import utils.Logger;
@@ -24,7 +25,9 @@ public class StudentView {
             System.out.println("3. View my enrolled courses");
             System.out.println("4. View transcript");
             System.out.println("5. View marks for a course");
-            System.out.println("6. Research menu");
+            System.out.println("6. View teacher info for a course");
+            System.out.println("7. Rate a teacher");
+            System.out.println("8. Research menu");
             System.out.println("0. Logout");
 
             int choice = readInt("Choose option: ");
@@ -35,7 +38,9 @@ public class StudentView {
                 case 3 -> viewMyCourses(student);
                 case 4 -> viewTranscript(student);
                 case 5 -> viewMarks(student);
-                case 6 -> new ResearchView().show(student);
+                case 6 -> viewCourseTeacherInfo(student);
+                case 7 -> rateTeacher(student);
+                case 8 -> new ResearchView().show(student);
                 case 0 -> {
                     Logger.info("Logout: " + student.getEmail());
                     return;
@@ -122,6 +127,92 @@ public class StudentView {
         }
 
         reportService.printMarksForCourse(student, courses.get(choice - 1));
+    }
+
+    private void viewCourseTeacherInfo(Student student) {
+        List<Course> courses = courseService.getAllCourses();
+
+        if (courses.isEmpty()) {
+            System.out.println("No courses available.");
+            return;
+        }
+
+        System.out.println("=== Select a course to view instructors ===");
+        for (int i = 0; i < courses.size(); i++) {
+            Course course = courses.get(i);
+            System.out.printf("%d. %s - %s\n", i + 1, course.getCourseId(), course.getName());
+        }
+
+        int choice = readInt("Choose course number: ");
+        if (choice < 1 || choice > courses.size()) {
+            System.out.println("Invalid course selection.");
+            return;
+        }
+
+        Course course = courses.get(choice - 1);
+        List<Teacher> instructors = course.getInstructors();
+
+        if (instructors.isEmpty()) {
+            System.out.println("No instructors assigned to this course.");
+            return;
+        }
+
+        System.out.println("=== Instructors for " + course.getName() + " ===");
+        for (Teacher t : instructors) {
+            System.out.printf("Name: %s, Email: %s, Dept: %s, Rating: %.2f\n",
+                    t.getName(), t.getEmail(), t.getDepartment(), t.getRating());
+        }
+    }
+
+    private void rateTeacher(Student student) {
+        List<Course> courses = courseService.getEnrolledCourses(student);
+
+        if (courses.isEmpty()) {
+            System.out.println("You are not enrolled in any courses to rate their teachers.");
+            return;
+        }
+
+        System.out.println("=== Select a course to choose a teacher to rate ===");
+        for (int i = 0; i < courses.size(); i++) {
+            Course c = courses.get(i);
+            System.out.printf("%d. %s - %s\n", i + 1, c.getCourseId(), c.getName());
+        }
+
+        int cchoice = readInt("Choose course number: ");
+        if (cchoice < 1 || cchoice > courses.size()) {
+            System.out.println("Invalid course selection.");
+            return;
+        }
+
+        Course course = courses.get(cchoice - 1);
+        List<Teacher> instructors = course.getInstructors();
+
+        if (instructors.isEmpty()) {
+            System.out.println("No instructors assigned to this course.");
+            return;
+        }
+
+        System.out.println("=== Select an instructor to rate ===");
+        for (int i = 0; i < instructors.size(); i++) {
+            Teacher t = instructors.get(i);
+            System.out.printf("%d. %s (%s)\n", i + 1, t.getName(), t.getEmail());
+        }
+
+        int tchoice = readInt("Choose instructor number: ");
+        if (tchoice < 1 || tchoice > instructors.size()) {
+            System.out.println("Invalid instructor selection.");
+            return;
+        }
+
+        Teacher teacher = instructors.get(tchoice - 1);
+        int rating = readInt("Enter rating (1-5): ");
+        if (rating < 1 || rating > 5) {
+            System.out.println("Rating must be between 1 and 5.");
+            return;
+        }
+
+        student.rateTeacher(teacher, rating);
+        System.out.println("Thank you. Rating submitted.");
     }
 
     private int readInt(String prompt) {
