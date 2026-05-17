@@ -358,20 +358,51 @@ public class ManagerView {
                 .forEach(System.out::println);
     }
 
-    // PUBLISH NEWS
+    private void createReport() {
 
-    private void publishNews() {
-
-        System.out.print("Enter news: ");
-
-        String news = sc.nextLine();
-
-        NewsPublisher publisher =
-                new NewsPublisher();
-
-        publisher.notifyObservers(news);
-
-        System.out.println("News published successfully");
+        DatabaseSingleton db =
+                DatabaseSingleton.getInstance();
+    
+        List<Student> students =
+                db.getUsers()
+                  .stream()
+                  .filter(user -> user instanceof Student)
+                  .map(user -> (Student) user)
+                  .toList();
+    
+        List<Teacher> teachers =
+                db.getUsers()
+                  .stream()
+                  .filter(user -> user instanceof Teacher)
+                  .map(user -> (Teacher) user)
+                  .toList();
+    
+        List<Course> courses =
+                db.getCourses();
+    
+        double totalGpa = 0;
+    
+        for (Student s : students) {
+            totalGpa += s.getGPA();
+        }
+    
+        double averageGpa =
+                students.isEmpty()
+                ? 0
+                : totalGpa / students.size();
+    
+        System.out.println("\n===== REPORT =====");
+        System.out.println("Total students: "
+                + students.size());
+    
+        System.out.println("Total teachers: "
+                + teachers.size());
+    
+        System.out.println("Total courses: "
+                + courses.size());
+    
+        System.out.println("Average GPA: "
+                + averageGpa);
     }
 
     // READ INT
@@ -395,7 +426,7 @@ public class ManagerView {
         }
     }
 
-    // METHOD
+    // PUBLISH NEWS
 
     private void publishNews(Manager manager) {
 
