@@ -1,5 +1,25 @@
 package views;
 
+        if (students.isEmpty()) {
+            System.out.println("No students in this course.");
+            return;
+        }
+
+        System.out.println("=== STUDENTS ===");
+
+        for (int i = 0; i < students.size(); i++) {
+            System.out.println((i + 1) + ". " + students.get(i).getName());
+        }
+
+        int choice = readInt("Choose student: ");
+
+        if (choice < 1 || choice > students.size()) {
+            System.out.println("Invalid student.");
+            return;
+        }
+
+        Student student = students.get(choice - 1);
+
         double att1 = readDouble("Attestation 1: ");
         double att2 = readDouble("Attestation 2: ");
         double finalExam = readDouble("Final exam: ");
