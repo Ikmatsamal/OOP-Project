@@ -1,6 +1,7 @@
 package services;
 
 import java.util.List;
+import models.system.News;
 import models.system.Message;
 import models.system.Complaint;
 import patterns.singleton.DatabaseSingleton;
@@ -18,6 +19,9 @@ public class TeacherService {
 
     public List<Student> getCourseStudents(Course course) {
         return course.getEnrolledStudents();
+    }
+    public List<News> getNews() {
+        return DatabaseSingleton.getInstance().getNews();
     }
 
     public void putMark(
@@ -77,21 +81,5 @@ public class TeacherService {
         DatabaseSingleton.getInstance().save();
     }
     
-    public List<Message> getInbox(Teacher teacher) {
-        return DatabaseSingleton
-                .getInstance()
-                .getMessages()
-                .stream()
-                .filter(m -> m.getReceiverEmail().equals(teacher.getEmail()))
-                .toList();
-    }
-
-    public List<Message> getSentMessages(Teacher teacher) {
-        return DatabaseSingleton
-                .getInstance()
-                .getMessages()
-                .stream()
-                .filter(m -> m.getSenderEmail().equals(teacher.getEmail()))
-                .toList();
-    }
+   
 }
