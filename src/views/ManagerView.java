@@ -1,22 +1,19 @@
 package views;
 
 import models.user.Manager;
+import services.ManagerService;
 import models.user.Student;
 import models.user.Teacher;
 import models.academic.Course;
-import models.system.News;
-import patterns.singleton.DatabaseSingleton;
+
 import enums.Major;
-
 import services.CourseService;
-
 import java.util.List;
 import java.util.Scanner;
-
-import patterns.observer.NewsPublisher;
-
 import models.system.News;
-import patterns.observer.NewsPublisher;
+import models.system.Message;
+import services.MessageService;
+
 
 public class ManagerView {
 
@@ -24,125 +21,195 @@ public class ManagerView {
 
     private final CourseService courseService =
             new CourseService();
+    private final ManagerService managerService =
+            new ManagerService();
+    private final MessageService messageService =
+            new MessageService();
 
-    public void show(Manager manager) {
+    
 
-        while (true) {
+    	public void show(Manager manager) {
 
-            System.out.println("\n===== MANAGER MENU =====");
-            System.out.println("1. View students");
-            System.out.println("2. View teachers");
-            System.out.println("3. View courses");
-            System.out.println("4. Assign course to teacher");
-            System.out.println("5. Add course for registration");
-            System.out.println("6. Approve student registration");
-            System.out.println("7. Create report");
-            System.out.println("8. View students by GPA");
-            System.out.println("9. View teachers alphabetically");
-            System.out.println("10. Publish news");
-            System.out.println("11. View news");
-            System.out.println("0. Logout");
+    	    while (true) {
 
-            System.out.print("Choose option: ");
+    	        System.out.println("\n===== MANAGER MENU =====");
+    	        System.out.println("1. Users");
+    	        System.out.println("2. Courses");
+    	        System.out.println("3. Reports");
+    	        System.out.println("4. News");
+    	        System.out.println("5. Messages");
+    	        System.out.println("0. Logout");
 
-            int choice = readInt();
+    	        int choice = readInt("Choose option: ");
 
-            switch (choice) {
+    	        switch (choice) {
+    	            case 1 -> usersMenu();
+    	            case 2 -> coursesMenu();
+    	            case 3 -> reportsMenu();
+    	            case 4 -> newsMenu(manager);
+    	            case 5 -> messagesMenu(manager);
+    	            case 0 -> {
+    	                System.out.println("Logout...");
+    	                return;
+    	            }
+    	            default -> System.out.println("Invalid option");
+    	        }
+    	    }
+    	}
+    	
+    	private void usersMenu() {
 
-            case 1:
-                viewStudents();
-                break;
+    	    while (true) {
+    	        System.out.println("\n===== USERS MENU =====");
+    	        System.out.println("1. View students");
+    	        System.out.println("2. View teachers");
+    	        System.out.println("3. View students by GPA");
+    	        System.out.println("4. View teachers alphabetically");
+    	        System.out.println("0. Back");
 
-            case 2:
-                viewTeachers();
-                break;
+    	        int choice = readInt("Choose option: ");
 
-            case 3:
-                viewCourses();
-                break;
+    	        switch (choice) {
+    	            case 1 -> viewStudents();
+    	            case 2 -> viewTeachers();
+    	            case 3 -> viewStudentsSortedByGPA();
+    	            case 4 -> viewTeachersAlphabetically();
+    	            case 0 -> {
+    	                return;
+    	            }
+    	            default -> System.out.println("Invalid option");
+    	        }
+    	    }
+    	}
+    	
+    	private void coursesMenu() {
 
-            case 4:
-                assignCourseToTeacher();
-                break;
+    	    while (true) {
+    	        System.out.println("\n===== COURSES MENU =====");
+    	        System.out.println("1. View courses");
+    	        System.out.println("2. Assign course to teacher");
+    	        System.out.println("3. Add course for registration");
+    	        System.out.println("4. Approve student registration");
+    	        System.out.println("0. Back");
 
-            case 5:
-                addCourseForRegistration();
-                break;
+    	        int choice = readInt("Choose option: ");
 
-            case 6:
-                approveRegistration();
-                break;
+    	        switch (choice) {
+    	            case 1 -> viewCourses();
+    	            case 2 -> assignCourseToTeacher();
+    	            case 3 -> addCourseForRegistration();
+    	            case 4 -> approveRegistration();
+    	            case 0 -> {
+    	                return;
+    	            }
+    	            default -> System.out.println("Invalid option");
+    	        }
+    	    }
+    	}
+    	
+    	private void reportsMenu() {
 
-            case 7:
-                createReport();
-                break;
+    	    while (true) {
+    	        System.out.println("\n===== REPORTS MENU =====");
+    	        System.out.println("1. Create report");
+    	        System.out.println("0. Back");
 
-            case 8:
-                viewStudentsSortedByGPA();
-                break;
+    	        int choice = readInt("Choose option: ");
 
-            case 9:
-                viewTeachersAlphabetically();
-                break;
+    	        switch (choice) {
+    	            case 1 -> createReport();
+    	            case 0 -> {
+    	                return;
+    	            }
+    	            default -> System.out.println("Invalid option");
+    	        }
+    	    }
+    	}
+    	
+    	private void newsMenu(Manager manager) {
 
-            case 10:
-                publishNews(manager);
-                break;
-                
-            case 11:
-                viewNews();
-                break;
+    	    while (true) {
+    	        System.out.println("\n===== NEWS MENU =====");
+    	        System.out.println("1. Publish news");
+    	        System.out.println("2. View news");
+    	        System.out.println("0. Back");
 
-            case 0:
-                System.out.println("Logout...");
-                return;
+    	        int choice = readInt("Choose option: ");
 
-            default:
-                System.out.println("Invalid option");
-        }
-        }
-    }
+    	        switch (choice) {
+    	            case 1 -> publishNews(manager);
+    	            case 2 -> viewNews();
+    	            case 0 -> {
+    	                return;
+    	            }
+    	            default -> System.out.println("Invalid option");
+    	        }
+    	    }
+    	}
+    	
+    	private void messagesMenu(Manager manager) {
+
+    	    while (true) {
+    	        System.out.println("\n===== MESSAGES MENU =====");
+    	        System.out.println("1. View inbox");
+    	        System.out.println("2. View sent messages");
+    	        System.out.println("3. Send message");
+    	        System.out.println("0. Back");
+
+    	        int choice = readInt("Choose option: ");
+
+    	        switch (choice) {
+    	            case 1 -> viewInbox(manager);
+    	            case 2 -> viewSentMessages(manager);
+    	            case 3 -> sendMessage(manager);
+    	            case 0 -> {
+    	                return;
+    	            }
+    	            default -> System.out.println("Invalid option");
+    	        }
+    	    }
+    	}
 
     // VIEW STUDENTS
-
     private void viewStudents() {
 
         List<Student> students =
-                DatabaseSingleton.getInstance()
-                        .getUsers()
-                        .stream()
-                        .filter(user -> user instanceof Student)
-                        .map(user -> (Student) user)
-                        .toList();
+                managerService.getStudents();
 
         if (students.isEmpty()) {
-            System.out.println("No students found");
+
+            System.out.println(
+                    "No students found"
+            );
+
             return;
         }
 
-        System.out.println("\n===== STUDENTS =====");
+        System.out.println(
+                "\n===== STUDENTS ====="
+        );
 
         students.forEach(System.out::println);
     }
 
     // VIEW TEACHERS
-
     private void viewTeachers() {
 
         List<Teacher> teachers =
-                DatabaseSingleton.getInstance()
-                        .getUsers()
-                        .stream()
-                        .filter(user -> user instanceof Teacher)
-                        .map(user -> (Teacher) user)
-                        .toList();
+                managerService.getTeachers();
 
         if (teachers.isEmpty()) {
-            System.out.println("No teachers found");
+
+            System.out.println(
+                    "No teachers found"
+            );
+
             return;
         }
 
-        System.out.println("\n===== TEACHERS =====");
+        System.out.println(
+                "\n===== TEACHERS ====="
+        );
 
         teachers.forEach(System.out::println);
     }
@@ -213,7 +280,7 @@ public class ManagerView {
         System.out.print("Credits: ");
         int credits = readInt();
 
-        try {
+        
 
             courseService.addCourseForRegistration(
                     id,
@@ -227,17 +294,7 @@ public class ManagerView {
                     "Course added successfully"
             );
 
-        }catch (Exception e) {
-
-            e.printStackTrace();
-
-            System.out.println(
-                    "Error: "
-                    + e.getClass().getSimpleName()
-                    + " - "
-                    + e.getMessage()
-            );
-        }
+        
     }
     // ASSIGN COURSE
 
@@ -265,12 +322,7 @@ public class ManagerView {
         Course course = courses.get(courseChoice - 1);
 
         List<Teacher> teachers =
-                DatabaseSingleton.getInstance()
-                        .getUsers()
-                        .stream()
-                        .filter(user -> user instanceof Teacher)
-                        .map(user -> (Teacher) user)
-                        .toList();
+                managerService.getTeachers();
 
         if (teachers.isEmpty()) {
             System.out.println("No teachers available");
@@ -291,10 +343,10 @@ public class ManagerView {
 
         Teacher teacher = teachers.get(teacherChoice - 1);
 
-        teacher.manageCourse(course);
-        course.addInstructor(teacher);
-
-        DatabaseSingleton.getInstance().save();
+        managerService.assignCourseToTeacher(
+                course,
+                teacher
+        );
 
         System.out.println("Course assigned successfully");
     }
@@ -307,53 +359,55 @@ public class ManagerView {
    
 
     // APPROVE REGISTRATION
-
     private void approveRegistration() {
 
-        System.out.print("Student email: ");
-        String studentEmail = sc.nextLine();
+        List<Student> students = managerService.getStudents();
 
-        System.out.print("Course ID: ");
-        String courseId = sc.nextLine();
-
-        Student student =
-                DatabaseSingleton.getInstance()
-                        .getUsers()
-                        .stream()
-                        .filter(user -> user instanceof Student)
-                        .map(user -> (Student) user)
-                        .filter(s -> s.getEmail()
-                                .equalsIgnoreCase(studentEmail))
-                        .findFirst()
-                        .orElse(null);
-
-        if (student == null) {
-            System.out.println("Student not found");
+        if (students.isEmpty()) {
+            System.out.println("No students found");
             return;
         }
 
-        Course course =
-                courseService.findCourseById(courseId)
-                        .orElse(null);
+        System.out.println("\n===== STUDENTS =====");
+        for (int i = 0; i < students.size(); i++) {
+            System.out.println((i + 1) + ". " + students.get(i));
+        }
 
-        if (course == null) {
-            System.out.println("Course not found");
+        int studentChoice = readInt("Choose student: ");
+
+        if (studentChoice < 1 || studentChoice > students.size()) {
+            System.out.println("Invalid student choice");
             return;
         }
+
+        Student student = students.get(studentChoice - 1);
+
+        List<Course> courses = courseService.getAllCourses();
+
+        if (courses.isEmpty()) {
+            System.out.println("No courses available");
+            return;
+        }
+
+        System.out.println("\n===== COURSES =====");
+        for (int i = 0; i < courses.size(); i++) {
+            System.out.println((i + 1) + ". " + courses.get(i));
+        }
+
+        int courseChoice = readInt("Choose course: ");
+
+        if (courseChoice < 1 || courseChoice > courses.size()) {
+            System.out.println("Invalid course choice");
+            return;
+        }
+
+        Course course = courses.get(courseChoice - 1);
 
         try {
-
-            course.enrollStudent(student);
-
-            System.out.println(
-                    "Registration approved successfully"
-            );
-
+            managerService.approveRegistration(student, course);
+            System.out.println("Registration approved successfully");
         } catch (Exception e) {
-
-            System.out.println(
-                    "Error: " + e.getMessage()
-            );
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
@@ -361,98 +415,58 @@ public class ManagerView {
 
     private void viewStudentsSortedByGPA() {
 
-        System.out.println("\n===== STUDENTS BY GPA =====");
+        System.out.println(
+                "\n===== STUDENTS BY GPA ====="
+        );
 
-        DatabaseSingleton.getInstance()
-                .getUsers()
-                .stream()
-                .filter(user -> user instanceof Student)
-                .map(user -> (Student) user)
-                .sorted((s1, s2) ->
-                        Double.compare(
-                                s2.getGPA(),
-                                s1.getGPA()
-                        ))
-                .forEach(System.out::println);
+        List<Student> students =
+                managerService
+                        .getStudentsSortedByGPA();
+
+        students.forEach(System.out::println);
     }
-
     // VIEW TEACHERS ALPHABETICALLY
 
     private void viewTeachersAlphabetically() {
 
-        System.out.println("\n===== TEACHERS A-Z =====");
+        System.out.println(
+                "\n===== TEACHERS A-Z ====="
+        );
 
-        DatabaseSingleton.getInstance()
-                .getUsers()
-                .stream()
-                .filter(user -> user instanceof Teacher)
-                .map(user -> (Teacher) user)
-                .sorted((t1, t2) ->
-                        t1.getName()
-                                .compareToIgnoreCase(
-                                        t2.getName()
-                                ))
-                .forEach(System.out::println);
+        List<Teacher> teachers =
+                managerService
+                        .getTeachersAlphabetically();
+
+        teachers.forEach(System.out::println);
     }
 
     private void createReport() {
 
-        DatabaseSingleton db =
-                DatabaseSingleton.getInstance();
-    
-        long students =
-                db.getUsers().stream()
-                .filter(user -> user instanceof Student)
-                .count();
-    
-        long teachers =
-                db.getUsers().stream()
-                .filter(user -> user instanceof Teacher)
-                .count();
-    
-        int courses =
-                db.getCourses().size();
-    
-        double avgGpa =
-                db.getUsers().stream()
-                .filter(user -> user instanceof Student)
-                .map(user -> (Student) user)
-                .mapToDouble(Student::getGPA)
-                .average()
-                .orElse(0.0);
-    
-        System.out.println("\n===== REPORT =====");
-    
         System.out.println(
-                "Total students: " + students
+                "\n===== REPORT ====="
         );
-    
+
         System.out.println(
-                "Total teachers: " + teachers
-        );
-    
-        System.out.println(
-                "Total courses: " + courses
-        );
-    
-        System.out.println(
-                "Average GPA: " + avgGpa
+                managerService.generateReport()
         );
     }
-    
     private void viewNews() {
 
         List<News> newsList =
-                DatabaseSingleton.getInstance()
-                        .getNews();
+                managerService.getNews();
 
         if (newsList.isEmpty()) {
 
-            System.out.println("No news available");
+            System.out.println(
+                    "No news available"
+            );
+
             return;
         }
 
-        System.out.println("\n===== NEWS =====");
+        System.out.println(
+                "\n===== NEWS ====="
+        );
 
         newsList.forEach(System.out::println);
     }
@@ -484,34 +498,67 @@ public class ManagerView {
 
         System.out.print("Enter news title: ");
         String title = sc.nextLine();
-    
+
         System.out.print("Enter news content: ");
         String content = sc.nextLine();
-    
+
         if (title.isBlank() || content.isBlank()) {
             System.out.println("News cannot be empty");
             return;
         }
-    
-        News news = new News(
+
+        managerService.publishNews(
+                manager,
                 title,
-                content,
-                java.time.LocalDateTime.now(),
-                manager.getName()
+                content
         );
-    
-        DatabaseSingleton.getInstance().addNews(news);
-    
+
         System.out.println("News published successfully");
-    
-        NewsPublisher publisher = new NewsPublisher();
-    
-        DatabaseSingleton.getInstance()
-                .getUsers()
-                .forEach(user -> publisher.addObserver(user));
-    
-        publisher.notifyObservers(
-                "New news published: " + title
-        );
     }
+    
+    private void sendMessage(Manager manager) {
+
+        System.out.print("Receiver email: ");
+        String email = sc.nextLine();
+
+        System.out.print("Message: ");
+        String text = sc.nextLine();
+
+        messageService.sendMessage(
+                manager,
+                email,
+                text
+        );
+
+        System.out.println("Message sent successfully");
+    }
+    
+    private void viewInbox(Manager manager) {
+
+        List<Message> messages =
+                messageService.getInbox(manager);
+
+        if (messages.isEmpty()) {
+            System.out.println("Inbox is empty");
+            return;
+        }
+
+        System.out.println("\n===== INBOX =====");
+        messages.forEach(System.out::println);
+    }
+    
+    private void viewSentMessages(Manager manager) {
+
+        List<Message> messages =
+                messageService.getSentMessages(manager);
+
+        if (messages.isEmpty()) {
+            System.out.println("No sent messages");
+            return;
+        }
+
+        System.out.println("\n===== SENT MESSAGES =====");
+        messages.forEach(System.out::println);
+    }
+    
 }

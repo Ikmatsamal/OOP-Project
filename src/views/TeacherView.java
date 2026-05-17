@@ -1,15 +1,15 @@
 package views;
 
 import java.util.List;
+
 import java.util.Scanner;
-import models.system.Message;
 
 import models.academic.Course;
 import models.system.News;
 import models.user.Student;
 import models.user.Teacher;
-
-import patterns.singleton.DatabaseSingleton;
+import models.system.Message;
+import services.MessageService;
 
 import services.TeacherService;
 
@@ -17,50 +17,95 @@ public class TeacherView {
 
     private final Scanner sc = new Scanner(System.in);
     private final TeacherService teacherService = new TeacherService();
+    private final MessageService messageService =
+            new MessageService();
 
     public void show(Teacher teacher) {
 
         while (true) {
 
             System.out.println("\n===== TEACHER MENU =====");
-            System.out.println("1. View my courses");
-            System.out.println("2. Manage course");
-            System.out.println("3. View news");
-            System.out.println("4. Generate report");
-            System.out.println("5. Send message");
-            System.out.println("6. Send complaint");
-            System.out.println("7. View inbox");
-            System.out.println("8. View sent messages");
+            System.out.println("1. Courses");
+            System.out.println("2. Reports");
+            System.out.println("3. News");
+            System.out.println("4. Messages");
+            System.out.println("5. Complaints");
             System.out.println("0. Logout");
 
-            System.out.print("Choose option: ");
-
-            int choice = readInt();
+            int choice = readInt("Choose option: ");
 
             switch (choice) {
-
-            case 1 -> viewCourses(teacher);
-
-            case 2 -> manageCourse(teacher);
-
-            case 3 -> viewNews();
-
-            case 4 -> teacherService.generateReport(teacher);
-            case 5 -> sendMessage(teacher);
-            case 6 -> sendComplaint(teacher);
-            case 7 -> viewInbox(teacher);
-            case 8 -> viewSentMessages(teacher);
-
-            case 0 -> {
-                System.out.println("Logout...");
-                return;
+                case 1 -> coursesMenu(teacher);
+                case 2 -> teacherService.generateReport(teacher);
+                case 3 -> viewNews();
+                case 4 -> messagesMenu(teacher);
+                case 5 -> sendComplaint(teacher);
+                case 0 -> {
+                    System.out.println("Logout...");
+                    return;
+                }
+                default -> System.out.println("Invalid option");
             }
-
-            default -> System.out.println("Invalid option");
-        }
         }
     }
+    
+    private void coursesMenu(Teacher teacher) {
 
+        while (true) {
+
+            System.out.println("\n===== COURSES MENU =====");
+            System.out.println("1. View my courses");
+            System.out.println("2. Manage course");
+            System.out.println("0. Back");
+
+            int choice = readInt("Choose option: ");
+
+            switch (choice) {
+                case 1 -> viewCourses(teacher);
+                case 2 -> manageCourse(teacher);
+                case 0 -> {
+                    return;
+                }
+                default -> System.out.println("Invalid option");
+            }
+        }
+    }
+    private void messagesMenu(Teacher teacher) {
+
+        while (true) {
+
+            System.out.println("\n===== MESSAGES MENU =====");
+            System.out.println("1. View inbox");
+            System.out.println("2. View sent messages");
+            System.out.println("3. Send message");
+            System.out.println("0. Back");
+
+            int choice = readInt("Choose option: ");
+
+            switch (choice) {
+                case 1 -> viewInbox(teacher);
+                case 2 -> viewSentMessages(teacher);
+                case 3 -> sendMessage(teacher);
+                case 0 -> {
+                    return;
+                }
+                default -> System.out.println("Invalid option");
+            }
+        }
+    }
+    
+    private int readInt(String prompt) {
+
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                System.out.println("Enter valid number.");
+            }
+        }
+    }
+    
     // VIEW COURSES
 
     private void viewCourses(Teacher teacher) {
@@ -246,11 +291,7 @@ public class TeacherView {
 
     private void viewNews() {
 
-        List<News> news =
-                DatabaseSingleton
-                        .getInstance()
-                        .getNews();
-
+    	List<News> news = teacherService.getNews();
         if (news.isEmpty()) {
 
             System.out.println("No news available");
@@ -355,7 +396,11 @@ public class TeacherView {
         String text = sc.nextLine();
 
         try {
-            teacherService.sendMessage(teacher, email, text);
+        	messageService.sendMessage(
+        	        teacher,
+        	        email,
+        	        text
+        	);
             System.out.println("Message sent successfully");
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -376,7 +421,7 @@ public class TeacherView {
     
     private void viewInbox(Teacher teacher) {
         List<Message> messages =
-                teacherService.getInbox(teacher);
+        		messageService.getInbox(teacher);
 
         if (messages.isEmpty()) {
             System.out.println("Inbox is empty");
@@ -389,7 +434,7 @@ public class TeacherView {
 
     private void viewSentMessages(Teacher teacher) {
         List<Message> messages =
-                teacherService.getSentMessages(teacher);
+        		messageService.getSentMessages(teacher);
 
         if (messages.isEmpty()) {
             System.out.println("No sent messages");
