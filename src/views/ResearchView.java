@@ -105,10 +105,29 @@ public class ResearchView {
             return;
         }
 
-        ResearchPaper paper = inputPaper();
+        List<ResearchPaper> papers = researcher.getPapers();
 
-        researchService.addPaper(researcher, paper);
-        researchService.addPaperToProject(project, paper);
+        if (papers.isEmpty()) {
+            System.out.println("You have no papers. Add a research paper first.");
+            return;
+        }
+
+        System.out.println("=== My Research Papers ===");
+
+        for (int i = 0; i < papers.size(); i++) {
+            System.out.println((i + 1) + ". " + papers.get(i));
+        }
+
+        int choice = readInt("Choose paper: ");
+
+        if (choice < 1 || choice > papers.size()) {
+            System.out.println("Invalid paper selection.");
+            return;
+        }
+
+        ResearchPaper selectedPaper = papers.get(choice - 1);
+
+        researchService.addPaperToProject(project, selectedPaper);
 
         System.out.println("Paper added to project successfully.");
     }

@@ -1,5 +1,6 @@
 package views;
 import models.user.User;
+import java.util.List;
 
 import java.util.Scanner;
 
@@ -44,21 +45,51 @@ public class Adminview {
     }
 
     private void viewStudents() {
-        DatabaseSingleton.getInstance().getUsers().stream()
-                .filter(user -> user instanceof Student)
-                .forEach(System.out::println);
-    }
 
+        List<User> students = DatabaseSingleton.getInstance()
+                .getUsers()
+                .stream()
+                .filter(user -> user instanceof Student)
+                .toList();
+
+        if (students.isEmpty()) {
+            System.out.println("No students found.");
+            return;
+        }
+
+        students.forEach(System.out::println);
+    }
+    
     private void viewTeachers() {
-        DatabaseSingleton.getInstance().getUsers().stream()
+
+        List<User> teachers = DatabaseSingleton.getInstance()
+                .getUsers()
+                .stream()
                 .filter(user -> user instanceof Teacher)
-                .forEach(System.out::println);
+                .toList();
+
+        if (teachers.isEmpty()) {
+            System.out.println("No teachers found.");
+            return;
+        }
+
+        teachers.forEach(System.out::println);
     }
 
     private void viewManagers() {
-        DatabaseSingleton.getInstance().getUsers().stream()
+
+        List<User> managers = DatabaseSingleton.getInstance()
+                .getUsers()
+                .stream()
                 .filter(user -> user instanceof Manager)
-                .forEach(System.out::println);
+                .toList();
+
+        if (managers.isEmpty()) {
+            System.out.println("No managers found.");
+            return;
+        }
+
+        managers.forEach(System.out::println);
     }
     
     private void addUser() {
