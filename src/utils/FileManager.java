@@ -10,6 +10,10 @@ public class FileManager {
 
     // ---------- SAVE ----------
 
+    public static void saveNews(Object news) {
+        saveObject(news, "news.ser");
+    }
+
     public static void saveUsers(Object users) {
         saveObject(users, "users.ser");
     }
@@ -31,6 +35,10 @@ public class FileManager {
     }
 
     // ---------- LOAD ----------
+
+    public static Object loadNews() {
+        return loadObject("news.ser");
+    }
 
     public static Object loadUsers() {
         return loadObject("users.ser");

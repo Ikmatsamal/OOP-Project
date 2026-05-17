@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Scanner;
 
 import models.academic.Course;
+import models.system.News;
 import models.user.Student;
 import models.user.Teacher;
+import models.system.News;
+import patterns.singleton.DatabaseSingleton;
 import services.CourseService;
 import services.ReportService;
 import utils.Logger;
@@ -28,6 +31,7 @@ public class    StudentView {
             System.out.println("6. View teacher info for a course");
             System.out.println("7. Rate a teacher");
             System.out.println("8. Research menu");
+            System.out.println("9. View news");
             System.out.println("0. Logout");
 
             int choice = readInt("Choose option: ");
@@ -41,6 +45,7 @@ public class    StudentView {
                 case 6 -> viewCourseTeacherInfo(student);
                 case 7 -> rateTeacher(student);
                 case 8 -> new ResearchView().show(student);
+                case 9 -> viewNews();
                 case 0 -> {
                     Logger.info("Logout: " + student.getEmail());
                     return;
@@ -225,4 +230,20 @@ public class    StudentView {
             }
         }
     }
+
+    private void viewNews() {
+
+        List<News> news =
+                DatabaseSingleton.getInstance().getNews();
+    
+        if (news.isEmpty()) {
+            System.out.println("No news available");
+            return;
+        }
+    
+        System.out.println("\n===== NEWS =====");
+    
+        news.forEach(System.out::println);
+    }
+
 }

@@ -8,6 +8,8 @@ import java.util.List;
 
 import java.io.Serializable;
 
+import java.util.List;
+
 public class Course implements Serializable{
     private String courseId;
     private String name;
