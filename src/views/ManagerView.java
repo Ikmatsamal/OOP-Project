@@ -73,9 +73,8 @@ public class ManagerView {
                 break;
 
             case 7:
-                manager.createReport();
+                createReport();
                 break;
-            
 
             case 8:
                 viewStudentsSortedByGPA();
@@ -396,46 +395,44 @@ public class ManagerView {
         DatabaseSingleton db =
                 DatabaseSingleton.getInstance();
     
-        List<Student> students =
-                db.getUsers()
-                  .stream()
-                  .filter(user -> user instanceof Student)
-                  .map(user -> (Student) user)
-                  .toList();
+        long students =
+                db.getUsers().stream()
+                .filter(user -> user instanceof Student)
+                .count();
     
-        List<Teacher> teachers =
-                db.getUsers()
-                  .stream()
-                  .filter(user -> user instanceof Teacher)
-                  .map(user -> (Teacher) user)
-                  .toList();
+        long teachers =
+                db.getUsers().stream()
+                .filter(user -> user instanceof Teacher)
+                .count();
     
-        List<Course> courses =
-                db.getCourses();
+        int courses =
+                db.getCourses().size();
     
-        double totalGpa = 0;
-    
-        for (Student s : students) {
-            totalGpa += s.getGPA();
-        }
-    
-        double averageGpa =
-                students.isEmpty()
-                ? 0
-                : totalGpa / students.size();
+        double avgGpa =
+                db.getUsers().stream()
+                .filter(user -> user instanceof Student)
+                .map(user -> (Student) user)
+                .mapToDouble(Student::getGPA)
+                .average()
+                .orElse(0.0);
     
         System.out.println("\n===== REPORT =====");
-        System.out.println("Total students: "
-                + students.size());
     
-        System.out.println("Total teachers: "
-                + teachers.size());
+        System.out.println(
+                "Total students: " + students
+        );
     
-        System.out.println("Total courses: "
-                + courses.size());
+        System.out.println(
+                "Total teachers: " + teachers
+        );
     
-        System.out.println("Average GPA: "
-                + averageGpa);
+        System.out.println(
+                "Total courses: " + courses
+        );
+    
+        System.out.println(
+                "Average GPA: " + avgGpa
+        );
     }
 
     // READ INT
