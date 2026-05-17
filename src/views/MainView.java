@@ -74,7 +74,7 @@ public class MainView {
             new ManagerView().show(manager);
         }
     }
-
+    
     public static void main(String[] args) {
 
         MainView view = new MainView();

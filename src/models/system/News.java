@@ -38,10 +38,9 @@ public class News implements Serializable {
 
     @Override
     public String toString() {
-        return "\n========== NEWS ==========\n" +
-                "Title: " + title + "\n" +
-                "Content: " + content + "\n" +
-                "Author: " + author + "\n" +
-                "Published at: " + publishedAt + "\n";
+        return "Title: " + title + "\n" +
+               "Content: " + content + "\n" +
+               "Author: " + author + "\n" +
+               "Published at: " + publishedAt;
     }
 }
