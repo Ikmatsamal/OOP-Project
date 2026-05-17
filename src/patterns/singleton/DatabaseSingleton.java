@@ -1,6 +1,7 @@
 package patterns.singleton;
 
 import models.academic.Mark;
+
 import models.system.Message;
 import models.system.Complaint;
 import models.academic.Lesson;
@@ -159,6 +160,13 @@ public class DatabaseSingleton implements java.io.Serializable {
     
     public void addNews(News newsItem) {
         news.add(newsItem);
+        save();
+    }
+    
+    public void addMessage(Message message) {
+
+        messages.add(message);
+
         save();
     }
     
