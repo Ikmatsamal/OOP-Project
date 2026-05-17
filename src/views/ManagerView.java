@@ -12,6 +12,8 @@ import services.CourseService;
 import java.util.List;
 import java.util.Scanner;
 
+import patterns.observer.NewsPublisher;
+
 public class ManagerView {
 
     private final Scanner sc = new Scanner(System.in);
@@ -30,6 +32,9 @@ public class ManagerView {
             System.out.println("4. Assign course to teacher");
             System.out.println("5. Approve student registration");
             System.out.println("6. Create report");
+            System.out.println("7. View students by GPA");
+            System.out.println("8. View teachers alphabetically");
+            System.out.println("9. Publish news");
             System.out.println("0. Logout");
 
             System.out.print("Choose option: ");
@@ -60,6 +65,18 @@ public class ManagerView {
 
                 case 6:
                     manager.createReport();
+                    break;
+                
+                case 7:
+                    viewStudentsSortedByGPA();
+                    break;
+                    
+                case 8:
+                    viewTeachersAlphabetically();
+                    break;
+                    
+                case 9:
+                    publishNews();
                     break;
 
                 case 0:
@@ -222,6 +239,60 @@ public class ManagerView {
                     "Error: " + e.getMessage()
             );
         }
+    }
+
+    // VIEW STUDENTS SORTED BY GPA
+
+    private void viewStudentsSortedByGPA() {
+
+        System.out.println("\n===== STUDENTS BY GPA =====");
+
+        DatabaseSingleton.getInstance()
+                .getUsers()
+                .stream()
+                .filter(user -> user instanceof Student)
+                .map(user -> (Student) user)
+                .sorted((s1, s2) ->
+                        Double.compare(
+                                s2.getGPA(),
+                                s1.getGPA()
+                        ))
+                .forEach(System.out::println);
+    }
+
+    // VIEW TEACHERS ALPHABETICALLY
+
+    private void viewTeachersAlphabetically() {
+
+        System.out.println("\n===== TEACHERS A-Z =====");
+
+        DatabaseSingleton.getInstance()
+                .getUsers()
+                .stream()
+                .filter(user -> user instanceof Teacher)
+                .map(user -> (Teacher) user)
+                .sorted((t1, t2) ->
+                        t1.getName()
+                                .compareToIgnoreCase(
+                                        t2.getName()
+                                ))
+                .forEach(System.out::println);
+    }
+
+    // PUBLISH NEWS
+
+    private void publishNews() {
+
+        System.out.print("Enter news: ");
+
+        String news = sc.nextLine();
+
+        NewsPublisher publisher =
+                new NewsPublisher();
+
+        publisher.notifyObservers(news);
+
+        System.out.println("News published successfully");
     }
 
     // READ INT
