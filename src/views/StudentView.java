@@ -10,7 +10,7 @@ import services.CourseService;
 import services.ReportService;
 import utils.Logger;
 
-public class StudentView {
+public class    StudentView {
 
     private final Scanner sc = new Scanner(System.in);
     private final CourseService courseService = new CourseService();
