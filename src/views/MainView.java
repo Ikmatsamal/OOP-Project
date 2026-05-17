@@ -59,7 +59,7 @@ public class MainView {
         System.out.println("Welcome, " + user.getEmail());
 
         if (user instanceof Admin admin) {
-            new Adminview().show(admin);
+            new AdminView().show(admin);
         }
 
         else if (user instanceof Student student) {
