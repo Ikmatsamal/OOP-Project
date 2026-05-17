@@ -1,4 +1,5 @@
 package patterns.factory;
+import enums.Major;
 
 import models.user.*;
 
@@ -9,7 +10,6 @@ public class UserFactory {
             int id,
             String name,
             String email,
-            String phone,
             String password
     ) {
 
@@ -21,7 +21,7 @@ public class UserFactory {
                         name,
                         email,
                         password,
-                        "Computer Science",
+                        enums.Major.COMPUTER_SCIENCE,
                         2
                 );
 

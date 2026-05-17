@@ -61,11 +61,11 @@ public class ManagerView {
                 break;
 
             case 4:
-                addCourseForRegistration();
+                assignCourseToTeacher();
                 break;
 
             case 5:
-                assignCourseToTeacher();
+                addCourseForRegistration();
                 break;
 
             case 6:
@@ -222,10 +222,15 @@ public class ManagerView {
                     "Course added successfully"
             );
 
-        } catch (Exception e) {
+        }catch (Exception e) {
+
+            e.printStackTrace();
 
             System.out.println(
-                    "Error: " + e.getMessage()
+                    "Error: "
+                    + e.getClass().getSimpleName()
+                    + " - "
+                    + e.getMessage()
             );
         }
     }
@@ -268,6 +273,8 @@ public class ManagerView {
 
         System.out.println("Course assigned successfully");
     }
+    
+   
 
     // APPROVE REGISTRATION
 

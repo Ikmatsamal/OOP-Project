@@ -74,9 +74,7 @@ public class CourseService {
                 credits
         );
 
-        db.getCourses().add(course);
-
-        db.save();
+        db.addCourse(course);
     }
 }
 
