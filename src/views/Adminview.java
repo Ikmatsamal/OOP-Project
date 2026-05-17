@@ -377,6 +377,7 @@ public class Adminview {
                 user.setPassword(sc.nextLine());
                 break;
         }
+        DatabaseSingleton.getInstance().save();
 
         System.out.println("User updated successfully.");
     }

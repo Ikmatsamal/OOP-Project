@@ -1,6 +1,7 @@
 package models.user;
 
 import models.academic.Course;
+import interfaces.Researchable;
 import models.academic.Mark;
 import models.academic.Transcript;
 import models.research.ResearcherDecorator;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Student extends User{
+public class Student extends User implements Researchable{
 
     
     private String major;
@@ -24,6 +25,7 @@ public class Student extends User{
     private ResearcherDecorator supervisor;
     private List<Course> enrolledCourses;
     private Transcript transcript;
+    private ResearcherDecorator researcherPart;
 
     public Student(int id, String name, String email,
                    String password, String major, int year) {
@@ -35,6 +37,7 @@ public class Student extends User{
         this.failCount = 0;
         this.enrolledCourses = new ArrayList<>();
         this.transcript = new Transcript(this);
+        this.researcherPart = new ResearcherDecorator(this, 3);
     }
 
     
@@ -91,6 +94,31 @@ public class Student extends User{
                 ", credits=" + credits +
                 ", failCount=" + failCount +
                 '}';
+    }
+    
+    @Override
+    public void addPaper(models.research.ResearchPaper paper) {
+        researcherPart.addPaper(paper);
+    }
+
+    @Override
+    public void addProject(models.research.ResearchProject project) {
+        researcherPart.addProject(project);
+    }
+
+    @Override
+    public void printPapers(java.util.Comparator<models.research.ResearchPaper> comparator) {
+        researcherPart.printPapers(comparator);
+    }
+
+    @Override
+    public int getHIndex() {
+        return researcherPart.getHIndex();
+    }
+
+    @Override
+    public java.util.List<models.research.ResearchPaper> getPapers() {
+        return researcherPart.getPapers();
     }
 
 }

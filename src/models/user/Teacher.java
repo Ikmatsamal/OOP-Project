@@ -1,15 +1,18 @@
 package models.user;
 
 import java.util.ArrayList;
+import interfaces.Researchable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import models.research.*;
+import java.util.Comparator;
 
 import models.academic.Course;
 import models.academic.Mark;
 
-public class Teacher extends User {
+public class Teacher extends User implements Researchable{
 
     private String department;
     
@@ -17,6 +20,7 @@ public class Teacher extends User {
     private List<Course> courses;
     private double rating;
     private Set<String> teachingSubjects;
+    private ResearcherDecorator researcherPart;
 
     public Teacher(int id, String name, String email, 
                    String password, String department) {
@@ -29,6 +33,7 @@ public class Teacher extends User {
         this.courses = new ArrayList<>();
         this.teachingSubjects = new HashSet<>();
         this.rating = 0.0;
+        this.researcherPart = new ResearcherDecorator(this, 5);
     }
 
     public void putMark(Student s, Mark m) {
@@ -93,6 +98,31 @@ public class Teacher extends User {
     public void setDepartment(String department) {
         this.department = department;
         this.updatedAt = System.currentTimeMillis();
+    }
+    
+    @Override
+    public void addPaper(ResearchPaper paper) {
+        researcherPart.addPaper(paper);
+    }
+
+    @Override
+    public void addProject(ResearchProject project) {
+        researcherPart.addProject(project);
+    }
+
+    @Override
+    public void printPapers(Comparator<ResearchPaper> comparator) {
+        researcherPart.printPapers(comparator);
+    }
+
+    @Override
+    public int getHIndex() {
+        return researcherPart.getHIndex();
+    }
+
+    @Override
+    public List<ResearchPaper> getPapers() {
+        return researcherPart.getPapers();
     }
 
    

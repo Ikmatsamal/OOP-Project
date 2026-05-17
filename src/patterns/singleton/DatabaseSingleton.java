@@ -196,8 +196,9 @@ public class DatabaseSingleton implements java.io.Serializable {
 
     public void deleteUser(int id) {
         users.removeIf(user -> user.getId() == id);
+        rebuildUserMap();
+        save();
     }
-
 }
 
 
