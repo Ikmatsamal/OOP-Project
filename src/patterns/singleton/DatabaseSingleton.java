@@ -8,9 +8,13 @@ import models.academic.Course;
 import models.research.ResearchProject;
 import utils.FileManager;
 
+import models.system.News;
+
 import java.util.*;
 
 public class DatabaseSingleton implements java.io.Serializable {
+
+    private List<News> news;
 
     private static final long serialVersionUID = 1L;
     
@@ -35,7 +39,7 @@ public class DatabaseSingleton implements java.io.Serializable {
 
         userMap = new HashMap<>();
         
-        
+        news = new ArrayList<>();
     }
 
     public static DatabaseSingleton getInstance() {
@@ -50,10 +54,6 @@ public class DatabaseSingleton implements java.io.Serializable {
 
         return instance;
     }
-    
-    
-    
-    
 
     // ---------- USERS ----------
     public void addUser(User user) {
@@ -137,6 +137,14 @@ public class DatabaseSingleton implements java.io.Serializable {
 
         addUser(admin);
     }
+
+    public List<News> getNews() {
+        return news;
+    }
+    public void addNews(News newsItem) {
+        news.add(newsItem);
+        save();
+    }
     
     @SuppressWarnings("unchecked")
     private void loadData() {
@@ -145,6 +153,11 @@ public class DatabaseSingleton implements java.io.Serializable {
         Object loadedProjects = FileManager.loadProjects();
         Object loadedMarks = FileManager.loadMarks();
         Object loadedLessons = FileManager.loadLessons();
+        Object loadedNews = FileManager.loadNews();
+
+        if (loadedNews != null) {
+            news = (List<News>) loadedNews;
+        }
 
         if (loadedUsers != null) {
             users = (List<User>) loadedUsers;
@@ -178,6 +191,7 @@ public class DatabaseSingleton implements java.io.Serializable {
     }
     
     public void save() {
+        FileManager.saveNews(news);
         FileManager.saveUsers(users);
         FileManager.saveCourses(courses);
         FileManager.saveProjects(projects);

@@ -4,7 +4,7 @@ import models.user.Manager;
 import models.user.Student;
 import models.user.Teacher;
 import models.academic.Course;
-
+import models.system.News;
 import patterns.singleton.DatabaseSingleton;
 
 import services.CourseService;
@@ -12,6 +12,9 @@ import services.CourseService;
 import java.util.List;
 import java.util.Scanner;
 
+import patterns.observer.NewsPublisher;
+
+import models.system.News;
 import patterns.observer.NewsPublisher;
 
 public class ManagerView {
@@ -76,7 +79,7 @@ public class ManagerView {
                     break;
                     
                 case 9:
-                    publishNews();
+                    publishNews(manager);
                     break;
 
                 case 0:
@@ -314,5 +317,42 @@ public class ManagerView {
                 );
             }
         }
+    }
+
+    // METHOD
+
+    private void publishNews(Manager manager) {
+
+        System.out.print("Enter news title: ");
+        String title = sc.nextLine();
+    
+        System.out.print("Enter news content: ");
+        String content = sc.nextLine();
+    
+        if (title.isBlank() || content.isBlank()) {
+            System.out.println("News cannot be empty");
+            return;
+        }
+    
+        News news = new News(
+                title,
+                content,
+                java.time.LocalDateTime.now(),
+                manager.getName()
+        );
+    
+        DatabaseSingleton.getInstance().addNews(news);
+    
+        System.out.println("News published successfully");
+    
+        NewsPublisher publisher = new NewsPublisher();
+    
+        DatabaseSingleton.getInstance()
+                .getUsers()
+                .forEach(user -> publisher.addObserver(user));
+    
+        publisher.notifyObservers(
+                "New news published: " + title
+        );
     }
 }
