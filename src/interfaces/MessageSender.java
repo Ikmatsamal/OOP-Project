@@ -1,5 +1,11 @@
 package interfaces;
 
-public class MessageSender {
+import models.user.Employee;
 
+public interface MessageSender {
+
+    void sendMessage(
+            Employee receiver,
+            String text
+    );
 }
