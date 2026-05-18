@@ -8,6 +8,8 @@ import models.user.User;
 import java.util.List;
 
 public class MessageService {
+	
+	
 
     private final DatabaseSingleton db =
             DatabaseSingleton.getInstance();

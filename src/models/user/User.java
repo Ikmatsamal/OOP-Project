@@ -106,7 +106,7 @@ public class User implements Serializable, patterns.observer.Observer {
     @Override
     public void update(String message) {
 
-        System.out.println(name + " received news: " + message);
+//        System.out.println(name + " received news: " + message);
 
-    }
+   }
 }

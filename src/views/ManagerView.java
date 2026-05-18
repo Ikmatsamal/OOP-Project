@@ -5,6 +5,7 @@ import services.ManagerService;
 import models.user.Student;
 import models.user.Teacher;
 import models.academic.Course;
+import models.system.Complaint;
 
 import enums.Major;
 import services.CourseService;
@@ -38,6 +39,7 @@ public class ManagerView {
     	        System.out.println("3. Reports");
     	        System.out.println("4. News");
     	        System.out.println("5. Messages");
+    	        System.out.println("6. Complaints");
     	        System.out.println("0. Logout");
 
     	        int choice = readInt("Choose option: ");
@@ -48,6 +50,7 @@ public class ManagerView {
     	            case 3 -> reportsMenu();
     	            case 4 -> newsMenu(manager);
     	            case 5 -> messagesMenu(manager);
+    	            case 6 -> viewComplaints();
     	            case 0 -> {
     	                System.out.println("Logout...");
     	                return;
@@ -559,6 +562,21 @@ public class ManagerView {
 
         System.out.println("\n===== SENT MESSAGES =====");
         messages.forEach(System.out::println);
+    }
+    
+    private void viewComplaints() {
+
+        List<Complaint> complaints =
+                managerService.getComplaints();
+
+        if (complaints.isEmpty()) {
+            System.out.println("No complaints");
+            return;
+        }
+
+        System.out.println("\n===== COMPLAINTS =====");
+
+        complaints.forEach(System.out::println);
     }
     
 }

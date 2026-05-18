@@ -12,6 +12,9 @@ import models.user.Student;
 import models.user.Teacher;
 
 public class TeacherService {
+	
+	private final DatabaseSingleton db =
+	        DatabaseSingleton.getInstance();
 
     public List<Course> getTeacherCourses(Teacher teacher) {
         return teacher.getCourses();
@@ -44,9 +47,7 @@ public class TeacherService {
         teacher.putMark(student, mark);
     }
 
-    public void generateReport(Teacher teacher) {
-        teacher.generateMarkReport();
-    }
+    
     
     public void sendMessage(Teacher teacher, String receiverEmail, String text) {
         if (receiverEmail == null || receiverEmail.isBlank()) {
@@ -68,7 +69,7 @@ public class TeacherService {
     }
 
     public void sendComplaint(Teacher teacher, String text) {
-        if (text == null || text.isBlank()) {
+        if (text == null || text.trim().isEmpty()) {
             throw new IllegalArgumentException("Complaint cannot be empty");
         }
 
@@ -77,8 +78,7 @@ public class TeacherService {
                 text
         );
 
-        DatabaseSingleton.getInstance().getComplaints().add(complaint);
-        DatabaseSingleton.getInstance().save();
+        db.addComplaint(complaint);
     }
     
     public boolean isValidMark(

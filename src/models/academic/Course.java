@@ -46,7 +46,7 @@ public class Course implements Serializable{
     public void enrollStudent(Student s) {
         if (!enrolledStudents.contains(s)) {
             enrolledStudents.add(s);
-            System.out.println(s.getName() + " enrolled in " + name);
+            
         }
     }
     

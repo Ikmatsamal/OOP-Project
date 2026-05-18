@@ -6,17 +6,26 @@ import java.time.LocalDateTime;
 public class Complaint implements Serializable {
     private String senderEmail;
     private String text;
-    private LocalDateTime createdAt;
+    private LocalDateTime date;
 
     public Complaint(String senderEmail, String text) {
         this.senderEmail = senderEmail;
         this.text = text;
-        this.createdAt = LocalDateTime.now();
+        this.date = LocalDateTime.now();
+    }
+
+    public String getSenderEmail() {
+        return senderEmail;
+    }
+
+    public String getText() {
+        return text;
     }
 
     @Override
     public String toString() {
-        return "[" + createdAt + "] Complaint from: " + senderEmail +
-                "\nText: " + text;
+        return "Complaint from " + senderEmail +
+                " | " + date +
+                " | " + text;
     }
 }

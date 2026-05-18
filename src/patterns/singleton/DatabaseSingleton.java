@@ -251,6 +251,11 @@ public class DatabaseSingleton implements java.io.Serializable {
         rebuildUserMap();
         save();
     }
+    
+    public void addComplaint(Complaint complaint) {
+        complaints.add(complaint);
+        save();
+    }
 }
 
 

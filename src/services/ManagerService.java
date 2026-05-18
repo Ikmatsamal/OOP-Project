@@ -7,12 +7,14 @@ import models.user.Student;
 import models.user.Teacher;
 import patterns.observer.NewsPublisher;
 import patterns.singleton.DatabaseSingleton;
+import models.system.Complaint;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class ManagerService {
-
+	
+	
     private final DatabaseSingleton db =
             DatabaseSingleton.getInstance();
 
@@ -60,6 +62,12 @@ public class ManagerService {
                                         t2.getName()
                                 ))
                 .toList();
+    }
+    
+    public List<Complaint> getComplaints() {
+        return DatabaseSingleton
+                .getInstance()
+                .getComplaints();
     }
     
     public Student findStudentByEmail(String email) {
