@@ -22,18 +22,34 @@ public class ResearchView {
     public void show(Researchable researcher) {
         while (true) {
             System.out.println("\n--- Research Menu ---");
+            System.out.println("1. My papers");
+            System.out.println("2. University papers");
+            System.out.println("3. Research projects");
+            System.out.println("4. Top cited researcher");
+            System.out.println("0. Back");
+
+            int choice = readInt("Choose: ");
+
+            switch (choice) {
+                case 1 -> myPapersMenu(researcher);
+                case 2 -> universityPapersMenu();
+                case 3 -> projectsMenu(researcher);
+                case 4 -> printTopCitedResearcher();
+                case 0 -> { return; }
+                default -> System.out.println("Invalid option.");
+            }
+        }
+    }
+    
+    
+    private void myPapersMenu(Researchable researcher) {
+        while (true) {
+            System.out.println("\n--- My Papers ---");
             System.out.println("1. View my papers");
             System.out.println("2. Add research paper");
-            System.out.println("3. Print my papers by citations");
-            System.out.println("4. Print my papers by date");
-            System.out.println("5. Print my papers by pages");
-            System.out.println("6. View all university papers by citations");
-            System.out.println("7. View all university papers by date");
-            System.out.println("8. View all university papers by pages");
-            System.out.println("9. Create research project");
-            System.out.println("10. Join research project");
-            System.out.println("11. Add paper to project");
-            System.out.println("12. View top cited researcher");
+            System.out.println("3. Print by citations");
+            System.out.println("4. Print by date");
+            System.out.println("5. Print by pages");
             System.out.println("0. Back");
 
             int choice = readInt("Choose: ");
@@ -44,20 +60,54 @@ public class ResearchView {
                 case 3 -> researcher.printPapers(new PaperByCitationsComparator());
                 case 4 -> researcher.printPapers(new PaperByDateComparator());
                 case 5 -> researcher.printPapers(new PaperByPagesComparator());
-                case 6 -> researchService.printAllPapersByCitations();
-                case 7 -> researchService.printAllPapersByDate();
-                case 8 -> researchService.printAllPapersByPages();
-                case 9 -> createProject();
-                case 10 -> joinProject(researcher);
-                case 11 -> addPaperToProject(researcher);
-                case 12 -> printTopCitedResearcher();
-                case 0 -> {
-                    return;
-                }
+                case 0 -> { return; }
                 default -> System.out.println("Invalid option.");
             }
         }
     }
+
+    private void universityPapersMenu() {
+        while (true) {
+            System.out.println("\n--- University Papers ---");
+            System.out.println("1. Print by citations");
+            System.out.println("2. Print by date");
+            System.out.println("3. Print by pages");
+            System.out.println("0. Back");
+
+            int choice = readInt("Choose: ");
+
+            switch (choice) {
+                case 1 -> researchService.printAllPapersByCitations();
+                case 2 -> researchService.printAllPapersByDate();
+                case 3 -> researchService.printAllPapersByPages();
+                case 0 -> { return; }
+                default -> System.out.println("Invalid option.");
+            }
+        }
+    }
+
+    private void projectsMenu(Researchable researcher) {
+        while (true) {
+            System.out.println("\n--- Research Projects ---");
+            System.out.println("1. Create research project");
+            System.out.println("2. Join research project");
+            System.out.println("3. Add paper to project");
+            System.out.println("0. Back");
+
+            int choice = readInt("Choose: ");
+
+            switch (choice) {
+                case 1 -> createProject();
+                case 2 -> joinProject(researcher);
+                case 3 -> addPaperToProject(researcher);
+                case 0 -> { return; }
+                default -> System.out.println("Invalid option.");
+            }
+        }
+    }
+    
+    
+    
 
     private void viewMyPapers(Researchable researcher) {
         if (researcher.getPapers().isEmpty()) {

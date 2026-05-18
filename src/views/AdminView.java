@@ -28,6 +28,7 @@ public class AdminView {
             System.out.println("1. Users");
             System.out.println("2. Courses");
             System.out.println("3. Messages");
+            System.out.println("4. View logs");
             System.out.println("0. Logout");
 
             int choice = readInt("Choose: ");
@@ -39,6 +40,7 @@ public class AdminView {
                 case 2 -> coursesMenu();
 
                 case 3 -> messagesMenu(admin);
+                case 4 -> viewLogs();
 
                 case 0 -> {
                     Logger.info("Logout: " + admin.getEmail());
@@ -182,6 +184,7 @@ public class AdminView {
         System.out.println("1. Student");
         System.out.println("2. Teacher");
         System.out.println("3. Manager");
+        System.out.println("4. Logs");
         System.out.println("0. Back");
 
         int option = readInt("Choose: ");
@@ -190,6 +193,7 @@ public class AdminView {
             case 1 -> addStudent();
             case 2 -> addTeacher();
             case 3 -> addManager();
+            case 4 -> viewLogs();
             case 0 -> System.out.println("Back to admin menu.");
             default -> System.out.println("Invalid option.");
         }
@@ -588,6 +592,20 @@ public class AdminView {
         );
 
         messages.forEach(System.out::println);
+    }
+    
+    private void viewLogs() {
+
+        List<String> logs = Logger.getLogs();
+
+        if (logs.isEmpty()) {
+            System.out.println("No logs available.");
+            return;
+        }
+
+        System.out.println("\n===== SYSTEM LOGS =====");
+
+        logs.forEach(System.out::println);
     }
     
     private int readInt(String message) {
