@@ -10,6 +10,7 @@ import models.user.Student;
 import models.user.Teacher;
 import models.system.Message;
 import services.MessageService;
+import enums.TeacherTitle;
 
 import services.TeacherService;
 
@@ -29,6 +30,9 @@ public class TeacherView {
             System.out.println("2. News");
             System.out.println("3. Messages");
             System.out.println("4. Complaints");
+            if (teacher.getTitle() == TeacherTitle.PROFESSOR) {
+                System.out.println("5. Research menu");
+            }
             System.out.println("0. Logout");
 
             int choice = readInt("Choose option: ");
@@ -38,6 +42,11 @@ public class TeacherView {
                 case 2 -> viewNews();
                 case 3 -> messagesMenu(teacher);
                 case 4 -> sendComplaint(teacher);
+                case 5 -> {
+                    if (teacher.getTitle() == TeacherTitle.PROFESSOR) {
+                        new ResearchView().show(teacher);
+                    }
+                }
                 case 0 -> {
                     System.out.println("Logout...");
                     return;
