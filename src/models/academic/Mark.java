@@ -13,12 +13,39 @@ public class Mark implements Serializable{
     private Course course;
 
     public Mark(Student student, Course course,
-                double attestation1, double attestation2, double finalExam) {
-        this.student = student;
-        this.course = course;
-        this.attestation1 = attestation1;
-        this.attestation2 = attestation2;
-        this.finalExam = finalExam;
+            double attestation1,
+            double attestation2,
+            double finalExam) {
+
+        if (attestation1 < 0 || attestation1 > 30) {
+            throw new IllegalArgumentException(
+                    "Attestation 1 must be between 0 and 30"
+            );
+        }
+
+        if (attestation2 < 0 || attestation2 > 30) {
+            throw new IllegalArgumentException(
+                    "Attestation 2 must be between 0 and 30"
+            );
+        }
+
+        if (finalExam < 0 || finalExam > 40) {
+            throw new IllegalArgumentException(
+                    "Final exam must be between 0 and 40"
+            );
+        }
+
+        if (attestation1 + attestation2 > 60) {
+            throw new IllegalArgumentException(
+                    "Total attestation cannot exceed 60"
+        );
+    }
+
+    this.student = student;
+    this.course = course;
+    this.attestation1 = attestation1;
+    this.attestation2 = attestation2;
+    this.finalExam = finalExam;
     }
 
     public double getFinalGrade() {
