@@ -5,41 +5,20 @@ import java.util.List;
 
 public class Admin extends User {
 
-    
     private List<String> permissions;
     private boolean canManageUsers;
     private boolean canViewLogs;
 
     public Admin(int id, String name, String email, String password) {
         super(id, name, email, password, "ADMIN");
-        
+
         this.permissions = new ArrayList<>();
         this.canManageUsers = true;
         this.canViewLogs = true;
-    }
 
-    public void addUser(User u) {
-        System.out.println(name + " added user: " + u.getName());
+        permissions.add("MANAGE_USERS");
+        permissions.add("VIEW_LOGS");
     }
-
-    public void removeUser(String id) {
-        System.out.println(name + " removed user with ID: " + id);
-    }
-
-    public void updateUser(User u) {
-        System.out.println(name + " updated user: " + u.getName());
-    }
-
-    public List<String> viewLogs() {
-        List<String> logs = new ArrayList<>();
-        logs.add(name + " viewed system logs");
-        return logs;
-    }
-
-    public void addPermission(String permission) {
-        permissions.add(permission);
-    }
-
 
     public List<String> getPermissions() {
         return permissions;
@@ -73,7 +52,9 @@ public class Admin extends User {
     @Override
     public String toString() {
         return "Admin{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
