@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 import models.research.*;
 import java.util.Comparator;
-
+import enums.TeacherTitle;
 import models.academic.Course;
 import models.academic.Mark;
 
@@ -21,13 +21,15 @@ public class Teacher extends User implements Researchable{
     private double rating;
     private Set<String> teachingSubjects;
     private ResearcherDecorator researcherPart;
+    private TeacherTitle title;
 
     public Teacher(int id, String name, String email, 
-                   String password, String department) {
+                   String password, String department,TeacherTitle title) {
         super(id, name, email, password, "TEACHER");
 
         
         this.department = department;
+        this.title = title;
         
 
         this.courses = new ArrayList<>();
@@ -79,6 +81,10 @@ public class Teacher extends User implements Researchable{
 
     public String getDepartment() {
         return department;
+    }
+    
+    public TeacherTitle getTitle() {
+        return title;
     }
 
     
@@ -138,12 +144,12 @@ public class Teacher extends User implements Researchable{
 
 
    
-
     @Override
     public String toString() {
         return "Teacher{" +
-                "name='" + name + '\''  +
+                "name='" + name + '\'' +
                 ", department='" + department + '\'' +
+                ", title=" + title +
                 ", rating=" + rating +
                 '}';
     }

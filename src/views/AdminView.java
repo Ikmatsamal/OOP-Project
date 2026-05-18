@@ -356,7 +356,8 @@ public class AdminView {
                 name,
                 email,
                 password,
-                department
+                department,
+                title
         );
 
         System.out.println("Teacher added successfully.");

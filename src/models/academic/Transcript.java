@@ -56,6 +56,13 @@ public class Transcript implements Serializable{
     }
 
     private double gradeToPoint(double grade) {
+
+        if (grade < 0 || grade > 100) {
+            throw new IllegalArgumentException(
+                    "Grade must be between 0 and 100"
+            );
+        }
+
         if (grade >= 90) return 4.0;
         if (grade >= 85) return 3.7;
         if (grade >= 80) return 3.3;
@@ -63,6 +70,7 @@ public class Transcript implements Serializable{
         if (grade >= 70) return 2.7;
         if (grade >= 65) return 2.3;
         if (grade >= 60) return 2.0;
+
         return 0.0; // F
     }
 

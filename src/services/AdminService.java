@@ -67,6 +67,7 @@ public class AdminService {
         );
 
         db.addUser(student);
+        db.save();
     }
     
 
@@ -75,17 +76,20 @@ public class AdminService {
             String name,
             String email,
             String password,
-            String department
+            String department,
+            TeacherTitle title
     ) {
         Teacher teacher = new Teacher(
                 id,
                 name,
                 email,
                 password,
-                department
+                department,
+                title
         );
 
         db.addUser(teacher);
+        db.save();
     }
     
     
@@ -105,6 +109,7 @@ public class AdminService {
         );
 
         db.addUser(manager);
+        db.save();
     }
     
     public User findUserById(int id) {

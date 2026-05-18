@@ -43,12 +43,19 @@ public class Student extends User implements Researchable{
 
     
     public void registerCourse(Course course) {
+        if (enrolledCourses.contains(course)) {
+            System.out.println("Student is already registered for this course");
+            return;
+        }
+
         if (credits + course.getCredits() > 21) {
             throw new CreditLimitExceededException("Credit limit exceeded (max 21)");
         }
 
         enrolledCourses.add(course);
         credits += course.getCredits();
+
+        course.enrollStudent(this);
     }
 
     public List<Mark> viewMarks(Course course) {
@@ -64,7 +71,7 @@ public class Student extends User implements Researchable{
     }
 
     public double getGPA() {
-        return gpa;
+        return transcript.calculateGPA();
     }
     public Major getMajor() {
         return major;
@@ -77,6 +84,10 @@ public class Student extends User implements Researchable{
         if (failCount > 3) {
             throw new TooManyFailsException("Too many failed courses");
         }
+    }
+    
+    public int getYear() {
+        return year;
     }
 
    
@@ -123,6 +134,20 @@ public class Student extends User implements Researchable{
     @Override
     public java.util.List<models.research.ResearchPaper> getPapers() {
         return researcherPart.getPapers();
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student)) return false;
+
+        Student student = (Student) o;
+        return this.getId() == student.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(getId());
     }
 
 }

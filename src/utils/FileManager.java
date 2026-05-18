@@ -101,7 +101,7 @@ public static Object loadComplaints() {
 
             out.close();
 
-            System.out.println(fileName + " saved");
+           
 
         } catch (Exception e) {
 
@@ -123,13 +123,13 @@ public static Object loadComplaints() {
 
             in.close();
 
-            System.out.println(fileName + " loaded");
+            
 
             return obj;
 
         } catch (Exception e) {
 
-            System.out.println(fileName + " not found");
+            
 
         }
 

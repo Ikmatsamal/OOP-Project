@@ -81,5 +81,16 @@ public class TeacherService {
         DatabaseSingleton.getInstance().save();
     }
     
+    public boolean isValidMark(
+            double att1,
+            double att2,
+            double finalExam
+    ) {
+        return att1 >= 0 && att1 <= 30
+                && att2 >= 0 && att2 <= 30
+                && finalExam >= 0 && finalExam <= 40
+                && att1 + att2 <= 60;
+    }
+    
    
 }

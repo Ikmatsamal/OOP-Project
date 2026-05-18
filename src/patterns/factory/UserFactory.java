@@ -1,6 +1,6 @@
 package patterns.factory;
 
-import enums.Major;
+import enums.TeacherTitle;
 import models.user.*;
 
 public class UserFactory {
@@ -32,7 +32,8 @@ public class UserFactory {
                         name,
                         email,
                         password,
-                        "FIT"
+                        "FIT",
+                        enums.TeacherTitle.TUTOR
                         
                 );
 

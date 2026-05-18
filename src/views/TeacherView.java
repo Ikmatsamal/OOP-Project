@@ -26,20 +26,18 @@ public class TeacherView {
 
             System.out.println("\n===== TEACHER MENU =====");
             System.out.println("1. Courses");
-            System.out.println("2. Reports");
-            System.out.println("3. News");
-            System.out.println("4. Messages");
-            System.out.println("5. Complaints");
+            System.out.println("2. News");
+            System.out.println("3. Messages");
+            System.out.println("4. Complaints");
             System.out.println("0. Logout");
 
             int choice = readInt("Choose option: ");
 
             switch (choice) {
                 case 1 -> coursesMenu(teacher);
-                case 2 -> teacherService.generateReport(teacher);
-                case 3 -> viewNews();
-                case 4 -> messagesMenu(teacher);
-                case 5 -> sendComplaint(teacher);
+                case 2 -> viewNews();
+                case 3 -> messagesMenu(teacher);
+                case 4 -> sendComplaint(teacher);
                 case 0 -> {
                     System.out.println("Logout...");
                     return;
@@ -196,11 +194,9 @@ public class TeacherView {
 
     private void putMark(Teacher teacher, Course course) {
 
-        List<Student> students =
-                course.getEnrolledStudents();
+        List<Student> students = course.getEnrolledStudents();
 
         if (students.isEmpty()) {
-
             System.out.println("No students enrolled");
             return;
         }
@@ -208,71 +204,32 @@ public class TeacherView {
         System.out.println("\n===== STUDENTS =====");
 
         for (int i = 0; i < students.size(); i++) {
-
             Student student = students.get(i);
-
-            System.out.println(
-                    (i + 1)
-                            + ". "
-                            + student.getName()
-            );
+            System.out.println((i + 1) + ". " + student.getName());
         }
 
         System.out.print("Choose student: ");
-
         int choice = readInt();
 
         if (choice < 1 || choice > students.size()) {
-
             System.out.println("Invalid student");
             return;
         }
 
-        Student student =
-                students.get(choice - 1);
+        Student student = students.get(choice - 1);
 
-                System.out.print("Attestation 1 (0-30): ");
+        System.out.print("Attestation 1 (0-30): ");
+        double att1 = readDouble();
 
-                double att1 = readDouble();
-                
-                if (att1 < 0 || att1 > 30) {
-                
-                    System.out.println(
-                            "Attestation 1 must be between 0 and 30"
-                    );
-                
-                    return;
-                }
-                
-                System.out.print("Attestation 2 (0-30): ");
-                
-                double att2 = readDouble();
-                
-                if (att2 < 0 || att2 > 30) {
-                
-                    System.out.println(
-                            "Attestation 2 must be between 0 and 30"
-                    );
-                
-                    return;
-                }
+        System.out.print("Attestation 2 (0-30): ");
+        double att2 = readDouble();
 
-                if (att1 + att2 > 60) {
-                    System.out.println("Total attestation cannot exceed 60");
-                    return;
-                }
-                
-                System.out.print("Final exam (0-40): ");
-                
-                double finalExam = readDouble();
-                
-                if (finalExam < 0 || finalExam > 40) {
-                
-                    System.out.println(
-                            "Final exam must be between 0 and 40"
-                    );
-                
-                    return;
+        System.out.print("Final exam (0-40): ");
+        double finalExam = readDouble();
+
+        if (!teacherService.isValidMark(att1, att2, finalExam)) {
+            System.out.println("Invalid marks");
+            return;
         }
 
         teacherService.putMark(
@@ -286,7 +243,6 @@ public class TeacherView {
 
         System.out.println("Mark added successfully");
     }
-
     // VIEW NEWS
 
     private void viewNews() {

@@ -26,7 +26,10 @@ public class    StudentView {
             System.out.println("1. Courses");
             System.out.println("2. Academic");
             System.out.println("3. Teachers");
-            System.out.println("4. Research");
+            if (student.getYear() >= 4) {
+                System.out.println("4. Research");
+            }
+
             System.out.println("5. News");
             System.out.println("0. Logout");
 
@@ -40,9 +43,21 @@ public class    StudentView {
 
                 case 3 -> teachersMenu(student);
 
-                case 4 -> new ResearchView().show(student);
+                case 4 -> {
+                    if (student.getYear() >= 4) {
+                        new ResearchView().show(student);
+                    } else {
+                        viewNews();
+                    }
+                }
 
-                case 5 -> viewNews();
+                case 5 -> {
+                    if (student.getYear() >= 4) {
+                        viewNews();
+                    } else {
+                        System.out.println("Invalid option.");
+                    }
+                }
 
                 case 0 -> {
                     Logger.info("Logout: " + student.getEmail());
