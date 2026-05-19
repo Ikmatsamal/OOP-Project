@@ -12,7 +12,6 @@ public class User implements Serializable, patterns.observer.Observer {
     protected long createdAt;
     protected long updatedAt;
 
-    
     public User(int id, String name, String email, String password, String role) {
         this.id = id;
         this.name = name;
@@ -24,13 +23,16 @@ public class User implements Serializable, patterns.observer.Observer {
         this.updatedAt = System.currentTimeMillis();
     }
 
-    
-    public int getId() {
-        return id;
+    public void setName(String name) {
+        this.name = name;
+        this.updatedAt = System.currentTimeMillis();
     }
 
     public String getName() {
         return name;
+    }
+    public int getId() {
+        return id;
     }
 
     public String getEmail() {
@@ -60,10 +62,7 @@ public class User implements Serializable, patterns.observer.Observer {
 }
 
     
-    public void setName(String name) {
-        this.name = name;
-        this.updatedAt = System.currentTimeMillis();
-    }
+   
 
     public void setEmail(String email) {
         this.email = email;

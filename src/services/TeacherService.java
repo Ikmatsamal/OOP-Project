@@ -45,6 +45,7 @@ public class TeacherService {
         );
 
         teacher.putMark(student, mark);
+        db.addMark(mark);
     }
 
     

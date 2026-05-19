@@ -283,8 +283,7 @@ public class ManagerView {
         System.out.print("Credits: ");
         int credits = readInt();
 
-        
-
+        try {
             courseService.addCourseForRegistration(
                     id,
                     name,
@@ -293,10 +292,11 @@ public class ManagerView {
                     credits
             );
 
-            System.out.println(
-                    "Course added successfully"
-            );
+            System.out.println("Course added successfully");
 
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
         
     }
     // ASSIGN COURSE
