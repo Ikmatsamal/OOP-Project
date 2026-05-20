@@ -47,17 +47,11 @@ public class    StudentView {
                     if (student.getYear() >= 4) {
                         new ResearchView().show(student);
                     } else {
-                        viewNews();
-                    }
-                }
-
-                case 5 -> {
-                    if (student.getYear() >= 4) {
-                        viewNews();
-                    } else {
                         System.out.println("Invalid option.");
                     }
                 }
+
+                case 5 -> viewNews();
 
                 case 0 -> {
                     Logger.info("Logout: " + student.getEmail());
