@@ -65,13 +65,9 @@ public class    StudentView {
                     } else {
                         System.out.println("Research menu is available only for researchers.");
                     }
-                }                case 5 -> {
-                    if (student.getYear() >= 4) {
-                        viewNews();
-                    } else {
-                        System.out.println("Invalid option.");
-                    }
-                }
+                }                
+
+                case 5 -> viewNews();
 
                 case 0 -> {
                     Logger.info("Logout: " + student.getEmail());
@@ -383,19 +379,21 @@ public class    StudentView {
         
         for(User user : users){
 
-            if(user instanceof Teacher teacher &&
-               teacher.getTitle() == TeacherTitle.PROFESSOR){
+        	if(user instanceof Teacher teacher &&
+        			   teacher.getTitle() == TeacherTitle.PROFESSOR &&
+        			   teacher.getHIndex() >= 3){
 
-                researchers.add(teacher);
-            }
+        			    researchers.add(teacher);
+        			}
+           
+        else if(user instanceof Student s &&
+                s.getId() != student.getId() &&
+                s.getYear() >= 4 &&
+                s instanceof Researchable researcher &&
+                researcher.getHIndex() >= 3){
 
-            else if(user instanceof Student s &&
-                    s.getId() != student.getId() &&
-                    s.getYear() >= 4 &&
-                    s instanceof Researchable researcher){
-
-                researchers.add(researcher);
-            }
+            researchers.add(researcher);
+        }
         }
 
         if(researchers.isEmpty()){
@@ -448,5 +446,5 @@ public class    StudentView {
             );
         }
     }
+    }
 
-}
