@@ -7,6 +7,9 @@ import interfaces.Researchable;
 import models.research.ResearchPaper;
 import models.research.ResearchProject;
 import patterns.singleton.DatabaseSingleton;
+import models.user.User;
+import exceptions.NotResearcherException;
+import utils.Logger;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -25,13 +28,45 @@ public class ResearchService {
         ResearchProject project = new ResearchProject(topic);
         db.addProject(project);
         db.save();
+        Logger.info(
+        	    "Research project created: " +
+        	    topic
+        	);
+        
     }
 
     public void joinProject(Researchable researcher, ResearchProject project) {
         project.addParticipant(researcher);
         researcher.addProject(project);
         db.save();
+        
+        Logger.info(
+        	    "Researcher joined project: " +
+        	    project.getTopic()
+        	);
     }
+    
+    
+    public void joinProject(models.user.User user, ResearchProject project) {
+        if (!(user instanceof Researchable researcher)) {
+            throw new exceptions.NotResearcherException(
+                    "Only researchers can join research projects"
+            );
+        }
+
+        joinProject(researcher, project);
+    }
+    
+//    public void joinProject(User user, ResearchProject project) {
+//        if (!(user instanceof Researchable researcher)) {
+//            throw new NotResearcherException("Only researchers can join research projects");
+//        }
+//
+//        project.addParticipant(researcher);
+//        researcher.addProject(project);
+//        db.save();
+//    }
+//    
 
     public void addPaperToProject(ResearchProject project, ResearchPaper paper) {
         project.addPublishedPaper(paper);

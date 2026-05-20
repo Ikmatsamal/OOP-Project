@@ -1,6 +1,7 @@
 package views;
 
 import java.util.List;
+import interfaces.Researchable;
 
 import java.util.Scanner;
 
@@ -30,7 +31,11 @@ public class TeacherView {
             System.out.println("2. News");
             System.out.println("3. Messages");
             System.out.println("4. Complaints");
-            if (teacher.getTitle() == TeacherTitle.PROFESSOR) {
+//            if (teacher.getTitle() == TeacherTitle.PROFESSOR) {
+//                System.out.println("5. Research menu");
+//            }
+            
+            if (teacher.getTitle() == TeacherTitle.PROFESSOR || teacher instanceof Researchable) {
                 System.out.println("5. Research menu");
             }
             System.out.println("0. Logout");
@@ -42,9 +47,17 @@ public class TeacherView {
                 case 2 -> viewNews();
                 case 3 -> messagesMenu(teacher);
                 case 4 -> sendComplaint(teacher);
+//                case 5 -> {
+//                    if (teacher.getTitle() == TeacherTitle.PROFESSOR) {
+//                        new ResearchView().show(teacher);
+//                    }
+//                }
+                
                 case 5 -> {
-                    if (teacher.getTitle() == TeacherTitle.PROFESSOR) {
+                    if (teacher.getTitle() == TeacherTitle.PROFESSOR || teacher instanceof Researchable) {
                         new ResearchView().show(teacher);
+                    } else {
+                        System.out.println("You are not a researcher.");
                     }
                 }
                 case 0 -> {

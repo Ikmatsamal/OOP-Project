@@ -3,6 +3,11 @@ package views;
 import java.util.List;
 import java.util.Scanner;
 
+import interfaces.Researchable;
+import models.user.User;
+import java.util.ArrayList;
+import enums.TeacherTitle;
+
 import models.academic.Course;
 import models.user.Student;
 import models.user.Teacher;
@@ -26,7 +31,10 @@ public class    StudentView {
             System.out.println("1. Courses");
             System.out.println("2. Academic");
             System.out.println("3. Teachers");
-            if (student.getYear() >= 4) {
+//            if (student.getYear() >= 4) {
+//                System.out.println("4. Research");
+//            }
+            if (student instanceof Researchable && student.getYear() >= 4) {
                 System.out.println("4. Research");
             }
 
@@ -43,15 +51,21 @@ public class    StudentView {
 
                 case 3 -> teachersMenu(student);
 
+//                case 4 -> {
+//                    if (student.getYear() >= 4) {
+//                        new ResearchView().show(student);
+//                    } else {
+//                        viewNews();
+//                    }
+//                }
+                
                 case 4 -> {
-                    if (student.getYear() >= 4) {
+                    if (student instanceof Researchable && student.getYear() >= 4) {
                         new ResearchView().show(student);
                     } else {
-                        viewNews();
+                        System.out.println("Research menu is available only for researchers.");
                     }
-                }
-
-                case 5 -> {
+                }                case 5 -> {
                     if (student.getYear() >= 4) {
                         viewNews();
                     } else {
@@ -105,6 +119,11 @@ public class    StudentView {
             System.out.println("\n===== ACADEMIC MENU =====");
             System.out.println("1. View transcript");
             System.out.println("2. View marks");
+
+            if(student.getYear() >= 4){
+                System.out.println("3. Assign supervisor");
+            }
+
             System.out.println("0. Back");
 
             int choice = readInt("Choose option: ");
@@ -114,6 +133,12 @@ public class    StudentView {
                 case 1 -> viewTranscript(student);
 
                 case 2 -> viewMarks(student);
+
+                case 3 -> {
+                    if(student.getYear() >= 4){
+                        assignSupervisor(student);
+                    }
+                }
 
                 case 0 -> {
                     return;
@@ -338,6 +363,90 @@ public class    StudentView {
         System.out.println("\n===== NEWS =====");
     
         news.forEach(System.out::println);
+    }
+    
+    private void assignSupervisor(Student student){
+
+        List<User> users =
+                DatabaseSingleton.getInstance()
+                        .getUsers();
+
+        List<Researchable> researchers =
+                new ArrayList<>();
+
+//        for(User user : users){
+//
+//            if(user instanceof Researchable researcher){
+//                researchers.add(researcher);
+//            }
+//        }
+        
+        for(User user : users){
+
+            if(user instanceof Teacher teacher &&
+               teacher.getTitle() == TeacherTitle.PROFESSOR){
+
+                researchers.add(teacher);
+            }
+
+            else if(user instanceof Student s &&
+                    s.getId() != student.getId() &&
+                    s.getYear() >= 4 &&
+                    s instanceof Researchable researcher){
+
+                researchers.add(researcher);
+            }
+        }
+
+        if(researchers.isEmpty()){
+            System.out.println("No researchers available");
+            return;
+        }
+
+        System.out.println("\n=== RESEARCHERS ===");
+
+        for(int i=0;i<researchers.size();i++){
+
+            Researchable r = researchers.get(i);
+
+            System.out.println(
+                    (i+1)
+                    + ". "
+                    + r
+                    + " | h-index: "
+                    + r.getHIndex()
+            );
+        }
+
+        int choice =
+                readInt("Choose supervisor: ");
+
+        if(choice<1 || choice>researchers.size()){
+
+            System.out.println("Invalid selection");
+            return;
+        }
+
+        try{
+
+            student.setSupervisor(
+                    researchers.get(choice-1)
+            );
+
+            DatabaseSingleton
+                    .getInstance()
+                    .save();
+
+            System.out.println(
+                    "Supervisor assigned successfully"
+            );
+
+        }catch(Exception e){
+
+            System.out.println(
+                    e.getMessage()
+            );
+        }
     }
 
 }

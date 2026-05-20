@@ -1,6 +1,7 @@
 package services;
 
 import models.academic.Course;
+import utils.Logger;
 import enums.Major;
 import models.user.Student;
 import patterns.singleton.DatabaseSingleton;
@@ -43,6 +44,8 @@ public class CourseService {
         student.registerCourse(course);
         course.enrollStudent(student);
         db.save();
+        
+        Logger.info(student.getName() + " enrolled in course " + course.getName());
     }
     
     
@@ -74,7 +77,11 @@ public class CourseService {
                 credits
         );
 
+        
+        
         db.addCourse(course);
+
+        Logger.info("Course added for registration: " + course.getName());
     }
 }
 

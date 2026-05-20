@@ -35,7 +35,7 @@ public class Teacher extends User implements Researchable{
         this.courses = new ArrayList<>();
         this.teachingSubjects = new HashSet<>();
         this.rating = 0.0;
-        this.researcherPart = new ResearcherDecorator(this, 5);
+        this.researcherPart = new ResearcherDecorator(this, 0);
     }
 
     public void putMark(Student s, Mark m) {

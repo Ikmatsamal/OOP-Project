@@ -1,6 +1,7 @@
 package services;
 
 import models.system.Message;
+import utils.Logger;
 
 import patterns.singleton.DatabaseSingleton;
 import models.user.User;
@@ -26,6 +27,11 @@ public class MessageService {
         );
 
         db.addMessage(message);
+        Logger.info(
+        	    sender.getEmail() +
+        	    " sent message to " +
+        	    receiverEmail
+        	);
     }
 
     public List<Message> getInbox(User user) {

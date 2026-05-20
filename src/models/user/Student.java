@@ -23,7 +23,7 @@ public class Student extends User implements Researchable{
     private double gpa;
     private int credits;
     private int failCount;
-    private ResearcherDecorator supervisor;
+    private Researchable supervisor;
     private List<Course> enrolledCourses;
     private Transcript transcript;
     private ResearcherDecorator researcherPart;
@@ -38,7 +38,7 @@ public class Student extends User implements Researchable{
         this.failCount = 0;
         this.enrolledCourses = new ArrayList<>();
         this.transcript = new Transcript(this);
-        this.researcherPart = new ResearcherDecorator(this, 3);
+        this.researcherPart = new ResearcherDecorator(this, 0);
     }
 
     
@@ -91,10 +91,22 @@ public class Student extends User implements Researchable{
     }
 
    
-    public void setSupervisor(ResearcherDecorator supervisor) {
+//    public void setSupervisor(ResearcherDecorator supervisor) {
+//        if (supervisor.getHIndex() < 3) {
+//            throw new InvalidSupervisorException("Supervisor must have h-index >= 3");
+//        }
+//        this.supervisor = supervisor;
+//    }
+    
+    public void setSupervisor(Researchable supervisor) {
+        if (this.year < 4) {
+            throw new InvalidSupervisorException("Only 4th year students can have supervisor");
+        }
+
         if (supervisor.getHIndex() < 3) {
             throw new InvalidSupervisorException("Supervisor must have h-index >= 3");
         }
+
         this.supervisor = supervisor;
     }
 

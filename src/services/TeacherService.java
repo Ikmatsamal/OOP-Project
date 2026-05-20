@@ -5,6 +5,7 @@ import models.system.News;
 import models.system.Message;
 import models.system.Complaint;
 import patterns.singleton.DatabaseSingleton;
+import utils.Logger;
 
 import models.academic.Course;
 import models.academic.Mark;
@@ -46,8 +47,13 @@ public class TeacherService {
 
         teacher.putMark(student, mark);
         db.addMark(mark);
-    }
 
+        Logger.info(
+            teacher.getName() +
+            " added marks for " +
+            student.getName()
+        );
+    }
     
     
     public void sendMessage(Teacher teacher, String receiverEmail, String text) {
